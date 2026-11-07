@@ -117,12 +117,16 @@ bindsym $mod+slash exec $keybinds
 bindsym $mod+Shift+slash exec $keybinds
 bindsym $mod+Ctrl+k exec $keybinds
 
-# Core Apps
+# Core Apps & Custom Torray Hub Plugin
 bindsym $mod+c exec $editor
 bindsym $mod+e exec $filemanager
 bindsym $mod+b exec firefox
 bindsym $mod+m exec wezterm start -- btop
 bindsym Ctrl+Mod1+Delete exec wezterm start -- btop
+bindsym $mod+n exec ~/.config/polybar/scripts/torray-hub.py --dash
+bindsym $mod+p exec ~/.config/polybar/scripts/torray-hub.py --music
+bindsym $mod+Shift+w exec ~/.config/polybar/scripts/torray-hub.py --wall
+for_window [title="Torray Hub"] floating enable, border pixel 2
 
 # Kill Active Window
 bindsym $mod+q kill

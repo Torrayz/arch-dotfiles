@@ -1,4 +1,4 @@
-/* Catppuccin Mocha Floating Pills — Interactive Dank Style (1366x768) */
+/* Catppuccin Mocha Proportional Dock & Inset Pills (1366x768) */
 @define-color base      #1e1e2e;
 @define-color mantle    #181825;
 @define-color crust     #11111b;
@@ -10,6 +10,7 @@
 @define-color mauve     #cba6f7;
 @define-color blue      #89b4fa;
 @define-color sapphire  #74c7ec;
+@define-color teal      #94e2d5;
 @define-color green     #a6e3a1;
 @define-color yellow    #f9e2af;
 @define-color peach     #fab387;
@@ -25,7 +26,8 @@
 }
 
 window#waybar {
-  background: transparent;
+  background-color: @crust;
+  border-radius: 10px;
   color: @text;
 }
 
@@ -36,80 +38,62 @@ tooltip {
   color: @text;
 }
 
-#custom-dash {
+#custom-hub {
   background-color: @mauve;
   color: @crust;
-  font-size: 12px;
+  font-weight: bold;
   padding: 0 10px;
-  border-radius: 99px;
-  transition: all 0.2s ease;
-}
-
-#custom-dash:hover {
-  background-color: @lavender;
+  margin: 3px 2px 3px 4px;
+  border-radius: 7px;
 }
 
 #workspaces {
   background-color: @base;
-  border: 1px solid @surface0;
-  border-radius: 99px;
-  padding: 1px 6px;
+  margin: 3px 2px;
+  border-radius: 7px;
+  padding: 0 4px;
 }
 
 #workspaces button {
-  padding: 0 5px;
-  margin: 1px;
-  border-radius: 99px;
+  padding: 0 6px;
+  margin: 2px 1px;
+  border-radius: 5px;
   color: @overlay0;
   background-color: transparent;
-  transition: all 0.2s ease;
-}
-
-#workspaces button:hover {
-  color: @text;
-  background-color: @surface0;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-  color: @mauve;
-  background-color: @surface0;
-  padding: 0 8px;
+  color: @crust;
+  background-color: @blue;
 }
 
 #workspaces button.urgent {
-  color: @red;
+  color: @crust;
+  background-color: @red;
 }
 
 #custom-quickterm,
 #custom-quickcode,
+#custom-quickwall,
 #custom-keybinds,
+#custom-media,
 #custom-clock_toggle,
 #custom-sysinfo,
 #backlight,
 #pulseaudio,
 #custom-net_toggle,
 #custom-power_status,
-#battery,
 #tray {
   background-color: @base;
-  border: 1px solid @surface0;
   padding: 0 9px;
-  border-radius: 99px;
-  transition: all 0.2s ease;
+  margin: 3px 1px;
+  border-radius: 7px;
 }
 
-#custom-quickterm:hover,
-#custom-quickcode:hover,
-#custom-keybinds:hover,
-#custom-clock_toggle:hover,
-#custom-sysinfo:hover,
-#backlight:hover,
-#pulseaudio:hover,
-#custom-net_toggle:hover,
-#battery:hover {
+#custom-media {
   background-color: @surface0;
-  border-color: @mauve;
+  color: @teal;
 }
 
 #custom-quickterm {
@@ -120,13 +104,16 @@ tooltip {
   color: @blue;
 }
 
+#custom-quickwall {
+  color: @mauve;
+}
+
 #custom-keybinds {
   color: @peach;
 }
 
 #custom-clock_toggle {
   color: @lavender;
-  padding: 0 12px;
 }
 
 #custom-sysinfo {
@@ -149,33 +136,14 @@ tooltip {
   color: @green;
 }
 
-#battery {
-  color: @green;
-}
-
-#battery.charging,
-#battery.plugged {
+#custom-power_status {
   color: @sapphire;
-}
-
-#battery.warning:not(.charging) {
-  color: @peach;
-}
-
-#battery.critical:not(.charging) {
-  background-color: @red;
-  color: @crust;
 }
 
 #custom-power {
   background-color: @red;
   color: @crust;
-  font-size: 11px;
   padding: 0 9px;
-  border-radius: 99px;
-  transition: all 0.2s ease;
-}
-
-#custom-power:hover {
-  background-color: @peach;
+  margin: 3px 4px 3px 2px;
+  border-radius: 7px;
 }

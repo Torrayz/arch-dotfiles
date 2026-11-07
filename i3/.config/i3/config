@@ -89,12 +89,16 @@ bindsym $mod+slash exec --no-startup-id $keybinds
 bindsym $mod+Shift+slash exec --no-startup-id $keybinds
 bindsym $mod+Ctrl+k exec --no-startup-id $keybinds
 
-# Core Apps
+# Core Apps & Custom Torray Hub Plugin
 bindsym $mod+c exec --no-startup-id $editor
 bindsym $mod+e exec --no-startup-id $filemanager
 bindsym $mod+b exec --no-startup-id firefox
 bindsym $mod+m exec --no-startup-id wezterm start -- btop
 bindsym Ctrl+Mod1+Delete exec --no-startup-id wezterm start -- btop
+bindsym $mod+n exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --dash
+bindsym $mod+p exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --music
+bindsym $mod+Shift+w exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --wall
+for_window [title="Torray Hub"] floating enable, border pixel 2
 
 # Kill Active Window
 bindsym $mod+q kill
@@ -128,6 +132,9 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
 bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5
 bindsym XF86AudioMute exec --no-startup-id pamixer -t
 bindsym XF86AudioMicMute exec --no-startup-id pamixer --default-source -t
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 

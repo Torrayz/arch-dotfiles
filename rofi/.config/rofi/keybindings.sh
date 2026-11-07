@@ -4,6 +4,9 @@
 # =============================================================================
 
 entries=(
+  "󰣇  Super + N                 │ Buka Torray Hub Plugin (Slider Audio/Layar, Musik, Wallpaper)"
+  "󰎆  Super + P                 │ Buka Plugin Music Player & Live Spectrum Visualizer"
+  "󰸉  Super + Shift + W         │ Buka Studio Wallpaper Visual (Pilih Gambar & Preview)"
   "󰍉  Super + Space             │ Cari & Buka Aplikasi (Spotlight Search)"
   "󰆍  Super + T / Super + Enter │ Buka Terminal WezTerm (Ada Tombol [+] & [x] Tab)"
   "󰌌  Super + / atau Super + ?  │ Buka Pencarian Keybindings Ini (atau Super+Ctrl+K)"
@@ -39,6 +42,15 @@ entries=(
 chosen="$(printf '%s\n' "${entries[@]}" | rofi -dmenu -i -p "󰌌 Cari Keybinding" -theme ~/.config/rofi/keybinds.rasi)"
 
 case "$chosen" in
+  *"Super + N"*)
+    ~/.config/polybar/scripts/torray-hub.py --dash &
+    ;;
+  *"Super + P"*)
+    ~/.config/polybar/scripts/torray-hub.py --music &
+    ;;
+  *"Super + Shift + W"*)
+    ~/.config/polybar/scripts/torray-hub.py --wall &
+    ;;
   *"Super + Space"*)
     rofi -show drun -show-icons
     ;;

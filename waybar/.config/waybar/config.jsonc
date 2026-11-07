@@ -1,20 +1,22 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 24,
-  "spacing": 5,
+  "height": 26,
+  "spacing": 4,
   "margin-top": 4,
   "margin-left": 6,
   "margin-right": 6,
 
   "modules-left": [
-    "custom/dash",
+    "custom/hub",
     "sway/workspaces",
     "custom/quickterm",
     "custom/quickcode",
+    "custom/quickwall",
     "custom/keybinds"
   ],
   "modules-center": [
+    "custom/media",
     "custom/clock_toggle"
   ],
   "modules-right": [
@@ -27,23 +29,17 @@
     "custom/power"
   ],
 
-  "custom/dash": {
-    "format": "󰣇",
-    "tooltip-format": "Torray Dash Control Center (Klik Kanan: Cari Aplikasi)",
-    "on-click": "~/.config/rofi/dashboard.sh",
+  "custom/hub": {
+    "format": "󰣇  Hub",
+    "tooltip-format": "Klik Kiri: Buka Torray Hub (Kontrol, Musik, Wallpaper) | Klik Kanan: Cari Aplikasi",
+    "on-click": "~/.config/polybar/scripts/torray-hub.py --dash",
     "on-click-right": "rofi -show drun -show-icons"
   },
 
   "sway/workspaces": {
     "disable-scroll": false,
     "all-outputs": true,
-    "format": "{icon}",
-    "format-icons": {
-      "focused": "󰮯",
-      "urgent": "",
-      "default": "",
-      "persistent": ""
-    },
+    "format": "{name}",
     "persistent-workspaces": {
       "1": [],
       "2": [],
@@ -54,30 +50,47 @@
   },
 
   "custom/quickterm": {
-    "format": "󰆍",
+    "format": "󰆍 ",
     "tooltip-format": "Buka Terminal WezTerm (Super+T)",
     "on-click": "wezterm start"
   },
 
   "custom/quickcode": {
-    "format": "󰨞",
+    "format": "󰨞 ",
     "tooltip-format": "Buka VS Code (Super+C)",
     "on-click": "code"
   },
 
+  "custom/quickwall": {
+    "format": "󰸉 ",
+    "tooltip-format": "Klik Kiri: Buka Studio Wallpaper | Klik Kanan: Ganti Wallpaper Cepat",
+    "on-click": "~/.config/polybar/scripts/torray-hub.py --wall",
+    "on-click-right": "~/.config/polybar/scripts/wallpaper-cycle.sh"
+  },
+
   "custom/keybinds": {
-    "format": "󰌌",
+    "format": "󰌌 ",
     "tooltip-format": "Cari Shortcut & Keybindings (Super+/)",
     "on-click": "~/.config/rofi/keybindings.sh"
+  },
+
+  "custom/media": {
+    "exec": "~/.config/polybar/scripts/media.sh",
+    "interval": 1,
+    "tooltip-format": "Klik Kiri: Play/Pause | Klik Kanan: Buka Music Visualizer | Scroll: Next/Prev",
+    "on-click": "~/.config/polybar/scripts/media.sh --play-pause",
+    "on-click-right": "~/.config/polybar/scripts/media.sh --hub",
+    "on-scroll-up": "~/.config/polybar/scripts/media.sh --next",
+    "on-scroll-down": "~/.config/polybar/scripts/media.sh --prev"
   },
 
   "custom/clock_toggle": {
     "exec": "~/.config/polybar/scripts/clock.sh",
     "interval": 1,
     "signal": 9,
-    "tooltip-format": "Klik Kiri: Toggle Tanggal Lengkap | Klik Kanan: Ganti Wallpaper",
+    "tooltip-format": "Klik Kiri: Toggle Tanggal Lengkap | Klik Kanan: Studio Wallpaper",
     "on-click": "~/.config/polybar/scripts/clock.sh --toggle",
-    "on-click-right": "~/.config/polybar/scripts/wallpaper-cycle.sh"
+    "on-click-right": "~/.config/polybar/scripts/torray-hub.py --wall"
   },
 
   "custom/sysinfo": {
@@ -91,31 +104,32 @@
 
   "backlight": {
     "device": "intel_backlight",
-    "format": "{icon}",
-    "tooltip-format": "Kecerahan Layar: {percent}% (Klik untuk ubah, atau Scroll)",
+    "format": "{icon} ",
+    "tooltip-format": "Kecerahan Layar: {percent}% (Klik Kiri: Ubah, Klik Kanan: Slider Hub)",
     "format-icons": ["󰃞", "󰃟", "󰃠"],
     "on-click": "~/.config/polybar/scripts/hw-action.sh bright-cycle",
+    "on-click-right": "~/.config/polybar/scripts/torray-hub.py --dash",
     "on-scroll-up": "~/.config/polybar/scripts/hw-action.sh bright-up",
     "on-scroll-down": "~/.config/polybar/scripts/hw-action.sh bright-down"
   },
 
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-bluetooth": "󰂰 {volume}%",
-    "format-muted": "󰝟",
+    "format": "{icon}  {volume}%",
+    "format-bluetooth": "󰂰  {volume}%",
+    "format-muted": "󰝟  Mute",
     "format-icons": {
       "headphone": "󰋋",
       "default": ["󰕿", "󰖀", "󰕾"]
     },
     "on-click": "~/.config/polybar/scripts/hw-action.sh vol-toggle",
-    "on-click-right": "pavucontrol",
+    "on-click-right": "~/.config/polybar/scripts/torray-hub.py --dash",
     "on-scroll-up": "pamixer -i 5",
     "on-scroll-down": "pamixer -d 5"
   },
 
   "custom/net_toggle": {
     "exec": "~/.config/polybar/scripts/net.sh",
-    "interval": 3,
+    "interval": 2,
     "signal": 10,
     "tooltip-format": "Klik Kiri: Tampilkan Nama Wi-Fi & IP | Klik Kanan: Pilih Wi-Fi",
     "on-click": "~/.config/polybar/scripts/net.sh --toggle",
@@ -127,7 +141,8 @@
     "interval": 2,
     "signal": 11,
     "tooltip-format": "Klik Kiri: Toggle Detail Power / Baterai",
-    "on-click": "~/.config/polybar/scripts/power-status.sh --toggle"
+    "on-click": "~/.config/polybar/scripts/power-status.sh --toggle",
+    "on-click-right": "~/.config/polybar/scripts/torray-hub.py --dash"
   },
 
   "tray": {
