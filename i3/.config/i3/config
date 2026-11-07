@@ -160,7 +160,7 @@ bindsym $mod+Shift+Down move down 45 px
 bindsym $mod+Shift+Up move up 45 px
 bindsym $mod+Shift+Right move right 45 px
 
-# Direct Resize with Super + Ctrl + Shift + Arrow AND Super + Ctrl + Arrow
+# Direct Resize with Super + Ctrl + Shift + Arrow/HJKL AND Super + Ctrl + Arrow
 bindsym $mod+Ctrl+Shift+Right resize grow width 50 px or 6 ppt
 bindsym $mod+Ctrl+Shift+Left resize shrink width 50 px or 6 ppt
 bindsym $mod+Ctrl+Shift+Up resize shrink height 50 px or 6 ppt
@@ -174,10 +174,6 @@ bindsym $mod+Ctrl+Right resize grow width 50 px or 6 ppt
 bindsym $mod+Ctrl+Left resize shrink width 50 px or 6 ppt
 bindsym $mod+Ctrl+Up resize shrink height 50 px or 6 ppt
 bindsym $mod+Ctrl+Down resize grow height 50 px or 6 ppt
-bindsym $mod+Ctrl+$right resize grow width 50 px or 6 ppt
-bindsym $mod+Ctrl+$left resize shrink width 50 px or 6 ppt
-bindsym $mod+Ctrl+$up resize shrink height 50 px or 6 ppt
-bindsym $mod+Ctrl+$down resize grow height 50 px or 6 ppt
 
 # Zoom Window Size (Both Width & Height at once) with Super + [=] / [-]
 bindsym $mod+equal exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh grow-both
