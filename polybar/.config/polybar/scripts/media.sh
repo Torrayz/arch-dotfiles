@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Live Navbar Music & Animated Visualizer Pill (MPRIS / playerctl + Torray Hub)
-# - Only appears in the center navbar when music is actively Playing!
-# - Left-clicking opens Torray Hub (Music Tab) centered below the navbar!
+# Live Navbar Music & Animated Visualizer Pill (Ultra-Lightweight Single-Call)
+# - Single playerctl query + pure bash builtins (zero cat/subshell forks)
+# - Only appears in the center navbar when music is actively Playing
 # =============================================================================
 
 FRAME_FILE="/tmp/bar_media_frame"
 
 case "${1:-}" in
     --hub)
-        ~/.config/polybar/scripts/torray-hub.py --music &
+        setsid -f ~/.config/polybar/scripts/torray-hub.py --music >/dev/null 2>&1
         exit 0
         ;;
     --play-pause)
@@ -26,22 +26,21 @@ case "${1:-}" in
         ;;
 esac
 
-status=$(playerctl status 2>/dev/null || echo "")
+IFS='|' read -r status title < <(playerctl metadata --format '{{status}}|{{title}}' 2>/dev/null)
 
-# Only display the moving music equalizer when music is actively Playing!
 if [ "$status" = "Playing" ]; then
     frames=("▂▄▆█" "▄▆█▃" "▆█▄▂" "▃▇▄" "▅▃▆█" "▃▆▄▂")
     idx=0
-    [ -f "$FRAME_FILE" ] && idx=$(cat "$FRAME_FILE" 2>/dev/null || echo 0)
+    [ -r "$FRAME_FILE" ] && read -r idx < "$FRAME_FILE"
     idx=$(( (idx + 1) % ${#frames[@]} ))
-    echo "$idx" > "$FRAME_FILE"
+    printf '%s\n' "$idx" > "$FRAME_FILE"
     eq="${frames[$idx]}"
 
-    title=$(playerctl metadata xesam:title 2>/dev/null || echo "Playing")
+    title="${title:-Playing}"
     if [ "${#title}" -gt 16 ]; then
         title="${title:0:15}…"
     fi
-    echo "󰎆 ${eq} ${title}"
+    printf '󰎆 %s %s\n' "$eq" "$title"
 else
-    echo ""
+    printf '\n'
 fi

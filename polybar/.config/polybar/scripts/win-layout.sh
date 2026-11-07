@@ -40,11 +40,13 @@ walk(tree)
 
 case "${1:-}" in
     status)
-        mode=$(cat "$STATE_FILE" 2>/dev/null || echo "Full")
-        echo "󰊓 ${mode}"
+        mode="Full"
+        [ -r "$STATE_FILE" ] && read -r mode < "$STATE_FILE"
+        printf '󰊓 %s\n' "${mode:-Full}"
         ;;
     cycle)
-        cur=$(cat "$STATE_FILE" 2>/dev/null || echo "Full")
+        cur="Full"
+        [ -r "$STATE_FILE" ] && read -r cur < "$STATE_FILE"
         case "$cur" in
             Full) "$0" small ;;
             S)    "$0" medium ;;

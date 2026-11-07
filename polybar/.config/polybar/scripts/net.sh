@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Interactive Expandable Wi-Fi Pill (Instant <5ms query + Mutual Exclusion)
+# Interactive Expandable Wi-Fi Pill (Zero-Fork Sysfs Check when Collapsed)
 # =============================================================================
 
 STATE_FILE="/tmp/bar_net_expanded"
@@ -10,22 +10,29 @@ if [ "${1:-}" = "--toggle" ]; then
         rm -f "$STATE_FILE"
     else
         rm -f /tmp/bar_sysinfo_expanded /tmp/bar_clock_expanded /tmp/bar_power_expanded
-        touch "$STATE_FILE"
+        : > "$STATE_FILE"
     fi
     pkill -RTMIN+10 waybar 2>/dev/null || true
     exit 0
 fi
 
-ssid=$(nmcli -t -f TYPE,STATE,CONNECTION dev 2>/dev/null | awk -F: '$1=="wifi" && $2=="connected" {print $3; exit}')
+oper="down"
+for iface in /sys/class/net/wl*/operstate; do
+    if [ -r "$iface" ]; then
+        read -r oper < "$iface"
+        break
+    fi
+done
 
-if [ -z "$ssid" ]; then
-    echo "󰤭 "
+if [ "$oper" != "up" ]; then
+    printf '󰤭 \n'
     exit 0
 fi
 
 if [ -f "$STATE_FILE" ]; then
-    ip=$(ip -4 -br addr show wlp3s0 2>/dev/null | awk '{print $3}' | cut -d/ -f1)
-    echo "󰤨  ${ssid} (${ip:-OK})"
+    ssid=$(nmcli -t -f TYPE,STATE,CONNECTION dev 2>/dev/null | awk -F: '$1=="wifi" && $2=="connected" {print $3; exit}')
+    ip=$(ip -4 -br addr show up 2>/dev/null | awk '/^wl/ {split($3,a,"/"); print a[1]; exit}')
+    printf '󰤨  %s (%s)\n' "${ssid:-Wi-Fi}" "${ip:-OK}"
 else
-    echo "󰤨 "
+    printf '󰤨 \n'
 fi
