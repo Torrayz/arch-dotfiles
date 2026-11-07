@@ -32,7 +32,7 @@ MAX_ITEMS = 35
 
 CSS = b"""
 window {
-    background-color: #181825;
+    background-color: rgba(24, 24, 37, 0.90);
     color: #cdd6f4;
     border: 1.5px solid #cba6f7;
     border-radius: 10px;
@@ -41,7 +41,7 @@ window {
 }
 button {
     background-image: none;
-    background-color: #313244;
+    background-color: rgba(49, 50, 68, 0.88);
     color: #cdd6f4;
     border: 1px solid #45475a;
     border-radius: 6px;
@@ -58,7 +58,7 @@ button:hover {
     border-color: #cba6f7;
 }
 .header-bar {
-    background-color: #11111b;
+    background-color: rgba(17, 17, 27, 0.92);
     padding: 5px 8px;
     border-bottom: 1px solid #313244;
 }
@@ -69,7 +69,7 @@ button:hover {
 }
 .search-entry {
     background-image: none;
-    background-color: #1e1e2e;
+    background-color: rgba(30, 30, 46, 0.85);
     color: #cdd6f4;
     border: 1px solid #45475a;
     border-radius: 6px;
@@ -81,13 +81,13 @@ button:hover {
     border-color: #cba6f7;
 }
 .clip-card {
-    background-color: #1e1e2e;
+    background-color: rgba(30, 30, 46, 0.88);
     border: 1px solid #313244;
     border-radius: 8px;
     padding: 6px 8px;
 }
 .clip-card-pinned {
-    background-color: #1e1e2e;
+    background-color: rgba(30, 30, 46, 0.88);
     border: 1.5px solid #f9e2af;
     border-radius: 8px;
     padding: 6px 8px;
@@ -267,6 +267,12 @@ class ClipboardPopup(Gtk.Window):
         self.stick()
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
         self.set_position(Gtk.WindowPosition.CENTER)
+
+        screen = self.get_screen()
+        visual = screen.get_rgba_visual()
+        if visual:
+            self.set_visual(visual)
+        self.set_app_paintable(True)
 
         provider = Gtk.CssProvider()
         provider.load_from_data(CSS)
@@ -493,9 +499,18 @@ def main():
         try:
             with open(POPUP_PID_FILE) as f:
                 old = int(f.read().strip())
+            os.kill(old, 0)
             os.kill(old, signal.SIGTERM)
-            os.remove(POPUP_PID_FILE)
+            try:
+                os.remove(POPUP_PID_FILE)
+            except Exception:
+                pass
             sys.exit(0)
+        except (ProcessLookupError, OSError):
+            try:
+                os.remove(POPUP_PID_FILE)
+            except Exception:
+                pass
         except Exception:
             try:
                 os.remove(POPUP_PID_FILE)

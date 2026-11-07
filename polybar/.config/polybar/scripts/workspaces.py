@@ -78,6 +78,18 @@ def render_workspaces():
     ws_windows = collect_workspace_windows(tree)
     parts = []
 
+    active_bg = "#89b4fa"
+    inactive_bg = "#1e1e2e"
+    crust_bg = "#11111b"
+    try:
+        with open("/tmp/torray_theme.json") as tf:
+            tdata = json.load(tf)
+            active_bg = tdata.get("second", active_bg)
+            inactive_bg = tdata.get("base", inactive_bg)
+            crust_bg = tdata.get("crust", crust_bg)
+    except Exception:
+        pass
+
     for ws in workspaces:
         name = ws.get("name", "1")
         focused = ws.get("focused", False)
@@ -98,19 +110,19 @@ def render_workspaces():
         cmd_click = f"i3-msg -q workspace '{name}'"
         if focused:
             icon_str = ("  " + "  ".join(icons_active) + "  ") if icons_active else " "
-            pill = f"%{{B#89b4fa}}%{{F#11111b}} {name}{icon_str}%{{B-}}%{{F-}}"
+            pill = f"%{{B{active_bg}}}%{{F{crust_bg}}} {name}{icon_str}%{{B-}}%{{F-}}"
         elif urgent:
             icon_str = ("  " + "  ".join(icons_active) + "  ") if icons_active else " "
-            pill = f"%{{B#f38ba8}}%{{F#11111b}} {name}{icon_str}%{{B-}}%{{F-}}"
+            pill = f"%{{B#f38ba8}}%{{F{crust_bg}}} {name}{icon_str}%{{B-}}%{{F-}}"
         else:
             icon_str = ("  " + "  ".join(icons_inactive) + "  ") if icons_inactive else " "
-            pill = f"%{{B#1e1e2e}}%{{F#a6adc8}} {name}{icon_str}%{{B-}}%{{F-}}"
+            pill = f"%{{B{inactive_bg}}}%{{F#a6adc8}} {name}{icon_str}%{{B-}}%{{F-}}"
 
         parts.append(
             f"%{{A1:{cmd_click}:}}%{{A4:i3-msg -q workspace prev:}}%{{A5:i3-msg -q workspace next:}}{pill}%{{A}}%{{A}}%{{A}}"
         )
 
-    return "%{B#11111b} %{B-}".join(parts)
+    return f"%{{B{crust_bg}}} %{{B-}}".join(parts)
 
 
 def main():

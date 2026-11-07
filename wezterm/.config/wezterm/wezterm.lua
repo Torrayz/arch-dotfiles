@@ -129,7 +129,8 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, hover, max_
 end)
 
 -- Tampilan Window & Cursor Kompak
-config.window_background_opacity = 0.96
+config.window_background_opacity = 0.90
+config.macos_window_background_blur = 20
 config.window_padding = {
   left = 8,
   right = 8,

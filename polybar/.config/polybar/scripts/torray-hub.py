@@ -9,6 +9,7 @@
 # =============================================================================
 
 import glob
+import json
 import math
 import os
 import random
@@ -38,7 +39,7 @@ CURRENT_WALL_LINK = os.path.expanduser("~/.config/sway/wallpaper.png")
 
 CSS = b"""
 window {
-    background-color: #181825;
+    background-color: rgba(24, 24, 37, 0.90);
     color: #cdd6f4;
     border: 1.5px solid #cba6f7;
     border-radius: 10px;
@@ -47,7 +48,7 @@ window {
 }
 button {
     background-image: none;
-    background-color: #313244;
+    background-color: rgba(49, 50, 68, 0.88);
     color: #cdd6f4;
     border: 1px solid #45475a;
     border-radius: 6px;
@@ -58,7 +59,7 @@ button {
     min-width: 0;
 }
 .header-bar {
-    background-color: #11111b;
+    background-color: rgba(17, 17, 27, 0.92);
     padding: 5px 8px;
     border-bottom: 1px solid #313244;
 }
@@ -93,13 +94,13 @@ button {
     font-weight: bold;
 }
 .card {
-    background-color: #1e1e2e;
+    background-color: rgba(30, 30, 46, 0.88);
     border: 1px solid #313244;
     border-radius: 8px;
     padding: 6px 8px;
 }
 .telemetry-bar {
-    background-color: #11111b;
+    background-color: rgba(17, 17, 27, 0.88);
     border: 1px solid #313244;
     border-radius: 6px;
     padding: 4px 8px;
@@ -277,10 +278,16 @@ class TorrayHub(Gtk.Window):
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
         self.set_position(Gtk.WindowPosition.CENTER)
 
-        provider = Gtk.CssProvider()
-        provider.load_from_data(CSS)
+        screen = self.get_screen()
+        visual = screen.get_rgba_visual()
+        if visual:
+            self.set_visual(visual)
+        self.set_app_paintable(True)
+
+        self.css_provider = Gtk.CssProvider()
+        self.apply_dynamic_css()
         Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            Gdk.Screen.get_default(), self.css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
 
         self.connect("key-press-event", self.on_key_press)
@@ -374,6 +381,24 @@ class TorrayHub(Gtk.Window):
             self.move((1366 - w) // 2, 36)
         else:
             self.move((1366 - w) // 2, (768 - h) // 2)
+
+    def apply_dynamic_css(self, custom_accent=None):
+        accent = custom_accent or "#cba6f7"
+        if not custom_accent and os.path.exists("/tmp/torray_theme.json"):
+            try:
+                with open("/tmp/torray_theme.json") as tf:
+                    accent = json.load(tf).get("accent", "#cba6f7")
+            except Exception:
+                pass
+        themed_css = CSS.decode("utf-8").replace("#cba6f7", accent).encode("utf-8")
+        self.css_provider.load_from_data(themed_css)
+
+    def apply_desktop_theme(self, theme_id, accent_hex):
+        self.apply_dynamic_css(accent_hex)
+        subprocess.Popen(
+            f"~/.config/polybar/scripts/theme-engine.sh {theme_id}",
+            shell=True,
+        )
 
     # -------------------------------------------------------------------------
     # TAB 1: Compact Control Center, Live Telemetry & Smart Toggles
@@ -582,16 +607,47 @@ class TorrayHub(Gtk.Window):
         self.stack.add_named(box, "music")
 
     # -------------------------------------------------------------------------
-    # TAB 3: Wallpaper Studio + Live Window Gaps Tweaker
+    # TAB 3: Global Desktop Theme Engine + HD Wallpaper Studio + Gaps Tweaker
     # -------------------------------------------------------------------------
     def build_wall_tab(self):
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        box.set_margin_top(6)
-        box.set_margin_bottom(6)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        box.set_margin_top(5)
+        box.set_margin_bottom(5)
         box.set_margin_start(8)
         box.set_margin_end(8)
 
-        # Top Tweaker Bar: Gaps + Random + File Picker
+        # 1. Global Desktop Color Themes (6 Presets)
+        theme_card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
+        theme_card.get_style_context().add_class("card")
+
+        t_lbl = Gtk.Label(label="󰸌 Tema Desktop (Navbar + Border + Aksen + Wallpaper):")
+        t_lbl.get_style_context().add_class("song-artist")
+        t_lbl.set_xalign(0)
+        theme_card.pack_start(t_lbl, False, False, 0)
+
+        t_grid = Gtk.Grid()
+        t_grid.set_column_spacing(4)
+        t_grid.set_row_spacing(4)
+        t_grid.set_column_homogeneous(True)
+
+        themes = [
+            ("🟣 Mocha", "mocha", "#cba6f7"),
+            ("🔵 Tokyo", "tokyo", "#7aa2f7"),
+            ("🌸 Sakura", "sakura", "#f5c2e7"),
+            ("🟢 Emerald", "emerald", "#a6e3a1"),
+            ("🟠 Cosmos", "cosmos", "#fab387"),
+            ("🔴 Crimson", "crimson", "#f38ba8"),
+        ]
+        for idx, (label, tid, hex_col) in enumerate(themes):
+            tb = Gtk.Button(label=label)
+            tb.get_style_context().add_class("action-btn")
+            tb.connect("clicked", lambda _w, t=tid, c=hex_col: self.apply_desktop_theme(t, c))
+            t_grid.attach(tb, idx % 3, idx // 3, 1, 1)
+
+        theme_card.pack_start(t_grid, False, False, 0)
+        box.pack_start(theme_card, False, False, 0)
+
+        # 2. Top Tweaker Bar: Gaps + Random + File Picker
         top_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
         gaps_lbl = Gtk.Label(label="Gaps:")
         gaps_lbl.get_style_context().add_class("song-artist")
@@ -615,18 +671,7 @@ class TorrayHub(Gtk.Window):
 
         box.pack_start(top_bar, False, False, 0)
 
-        # Window Floating & Size Presets Bar
-        win_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
-        win_lbl = Gtk.Label(label="Mode App:")
-        win_lbl.get_style_context().add_class("song-artist")
-        win_bar.pack_start(win_lbl, False, False, 0)
-        for w_label, w_arg in [("S", "small"), ("M", "medium"), ("L", "large"), ("PiP", "pip"), ("Full", "toggle-max")]:
-            wb = Gtk.Button(label=w_label)
-            wb.get_style_context().add_class("action-btn")
-            wb.connect("clicked", lambda _w, a=w_arg: self.launch_and_close(f"~/.config/polybar/scripts/win-layout.sh {a}"))
-            win_bar.pack_start(wb, True, True, 0)
-        box.pack_start(win_bar, False, False, 0)
-
+        # 3. Curated HD Wallpapers Gallery
         scroll = Gtk.ScrolledWindow()
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         self.wall_grid = Gtk.Grid()
@@ -646,7 +691,7 @@ class TorrayHub(Gtk.Window):
         seen = set()
         for d in WALL_DIRS:
             if os.path.isdir(d):
-                for ext in ("*.png", "*.jpg", "*.jpeg", "*.webp"):
+                for ext in ("*.jpg", "*.png", "*.jpeg", "*.webp"):
                     for f in sorted(glob.glob(os.path.join(d, ext))):
                         base = os.path.basename(f)
                         if base not in seen:
@@ -655,13 +700,15 @@ class TorrayHub(Gtk.Window):
 
         for idx, fpath in enumerate(files[:12]):
             try:
-                pix = GdkPixbuf.Pixbuf.new_from_file_at_scale(fpath, 142, 72, False)
+                pix = GdkPixbuf.Pixbuf.new_from_file_at_scale(fpath, 152, 76, False)
                 img = Gtk.Image.new_from_pixbuf(pix)
                 btn = Gtk.Button()
                 btn.get_style_context().add_class("wall-btn")
-                vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=1)
+                vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
                 vbox.pack_start(img, False, False, 0)
-                name_lbl = Gtk.Label(label=os.path.splitext(os.path.basename(fpath))[0][:18])
+                raw_name = os.path.splitext(os.path.basename(fpath))[0]
+                pretty_name = raw_name.replace("-", " ").title()[:22]
+                name_lbl = Gtk.Label(label=pretty_name)
                 name_lbl.get_style_context().add_class("song-artist")
                 vbox.pack_start(name_lbl, False, False, 0)
                 btn.add(vbox)
@@ -1028,9 +1075,21 @@ def main():
         try:
             with open(PID_FILE, "r") as f:
                 old_pid = int(f.read().strip())
+            # Check if process is actually running
+            os.kill(old_pid, 0)
+            # If running, toggle close it
             os.kill(old_pid, signal.SIGTERM)
-            os.remove(PID_FILE)
+            try:
+                os.remove(PID_FILE)
+            except Exception:
+                pass
             sys.exit(0)
+        except (ProcessLookupError, OSError):
+            # Stale PID file; clean it up and continue launching
+            try:
+                os.remove(PID_FILE)
+            except Exception:
+                pass
         except Exception:
             try:
                 os.remove(PID_FILE)

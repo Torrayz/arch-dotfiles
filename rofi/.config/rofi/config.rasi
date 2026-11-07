@@ -17,17 +17,17 @@ configuration {
 @theme "/dev/null"
 
 * {
-    bg-col:  #1e1e2e;
-    bg-col-light: #313244;
+    bg-col:  #181825ee;
+    bg-col-light: #313244cc;
     border-col: #cba6f7;
-    selected-col: #313244;
+    selected-col: #313244cc;
     mauve: #cba6f7;
     fg-col: #cdd6f4;
     fg-col2: #f38ba8;
     grey: #7f849c;
 
     width: 440;
-    background-color: @bg-col;
+    background-color: transparent;
 }
 
 element-text, element-icon , mode-switcher {

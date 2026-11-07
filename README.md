@@ -28,17 +28,17 @@ Custom **WezTerm** configuration with per-tab Catppuccin color badges, active pr
 ---
 
 ### 2. Centered `Torray Hub v2` (Native GTK3 Control Center)
-Accessible right from the center of the navbar (`[  Hub ]` or `Super + N` / `Super + P`), **Torray Hub v2** drops down at the top-center of your screen with **4 specialized tabs** and a dynamic **`[ 󰊓 S / M / L ]`** window size switcher:
+Accessible right from the center of the navbar (`[  Hub ]` or `Super + N` / `Super + P` / `Super + Shift + W`), **Torray Hub v2** drops down at the top-center of your screen with **4 specialized tabs** and a dynamic **`[ 󰊓 S / M / L ]`** window size switcher:
 
-| `󰒓 Control & Live Weather` (`Super + N`) | `󰎆 28-Bar Audio Visualizer` (`Super + P`) |
-| :---: | :---: |
-| <img src="assets/torray-hub-dash.png" alt="Torray Hub Control & Weather Tab" width="100%" /> | <img src="assets/torray-hub-music.png" alt="Torray Hub 28-Bar Music Visualizer" width="100%" /> |
-| **Pure-Python Telemetry** (`CPU / RAM / Temp / Disk`), **Live Local Weather (`wttr.in`)**, **Volume & Brightness Sliders**, and **Smart Toggles** (`Anti-Sleep`, `DND Focus`, `Eye Care`). | **60 FPS Cairo Spectrum Equalizer** with **3 color themes** (`🌈 Cyber`, `🟣 Mauve`, `🟢 Matrix`) and full MPRIS media controls. |
+| `󰒓 Control & Live Weather` (`Super + N`) | `󰎆 28-Bar Audio Visualizer` (`Super + P`) | `󰸉 6 Themes & HD Wallpapers` (`Super + Shift + W`) |
+| :---: | :---: | :---: |
+| <img src="assets/torray-hub-dash.png" alt="Torray Hub Control & Weather Tab" width="100%" /> | <img src="assets/torray-hub-music.png" alt="Torray Hub 28-Bar Music Visualizer" width="100%" /> | <img src="assets/torray-hub-theme.png" alt="Torray Hub Themes & Wallpapers Tab" width="100%" /> |
+| **Pure-Python Telemetry** (`CPU / RAM / Temp / Disk`), **Live Local Weather (`wttr.in`)**, **Volume & Brightness Sliders**, and **Smart Toggles** (`Anti-Sleep`, `DND Focus`, `Eye Care`). | **60 FPS Cairo Spectrum Equalizer** with **3 color themes** (`🌈 Cyber`, `🟣 Mauve`, `🟢 Matrix`) and full MPRIS media controls. | **6 Desktop Presets** (`Mocha`, `Tokyo`, `Sakura`, `Emerald`, `Cosmos`, `Crimson`), **12 Curated HD Wallpapers**, and **Live Window Gaps Tweaker** (`0px / 4px / 10px`). |
 
 ---
 
 ### 3. `Torray Clip` — Windows 11-Style Visual Clipboard (`Super + V`)
-An event-driven GTK3 clipboard manager that captures **both copied text snippets AND screenshots/images** with visual thumbnails, instant search filtering, item pinning (`󰐃`), one-click auto-paste (`󰅌`), and resizable `S / M / L` presets:
+An event-driven GTK3 clipboard manager with RGBA visual transparency and Picom blur that captures **both copied text snippets AND screenshots/images** with visual thumbnails, instant search filtering, item pinning (`󰐃`), one-click auto-paste (`󰅌`), and resizable `S / M / L` presets:
 
 <div align="center">
   <img src="assets/clipboard-preview.png" alt="Torray Clip Super+V Visual Clipboard" width="58%" />
@@ -47,6 +47,13 @@ An event-driven GTK3 clipboard manager that captures **both copied text snippets
 ---
 
 ## ✨ Key Architecture & Performance Highlights
+
+- **Frosted Glass Blur & Translucency (`Picom v13 Dual-Kawase`)**:
+  - **GPU-Accelerated Blur**: Enabled `dual_kawase` blur (strength 5) with zero frame tearing on Intel Haswell iGPU.
+  - **Translucent Elements**: Polybar navbar (`#cc11111b` dock with `#e61e1e2e` floating pills), WezTerm (`90%` opacity), Torray Hub (`rgba(24, 24, 37, 0.90)`), Torray Clip, and Rofi menus all receive smooth frosted glass backdrop blur.
+- **Global Desktop Theme Engine (`theme-engine.sh`)**:
+  - Switch entire system themes on-the-fly (`🟣 Mocha`, `🔵 Tokyo Cyber`, `🌸 Sakura Sunset`, `🟢 Emerald Matrix`, `🟠 Cosmos Gold`, `🔴 Crimson Abyss`).
+  - Instantly synchronizes Polybar bar colors, i3 window borders, Rofi palettes, GTK3 plugin accents, and matches curated high-resolution wallpapers.
 
 - **Proportional Inset-Pill Navbar (`Polybar` & `Waybar`)**:
   - **Live App Logos inside Workspaces (`workspaces.py`)**: Subscribes directly to the i3/Sway IPC socket (`0.0% idle CPU`) and renders live Nerd Font icons (`󰆍` WezTerm, `󰨞` VS Code, `󰈹` Firefox, `󰉋` Thunar, `` Neovim, `󰻠` btop) inside each workspace pill.
