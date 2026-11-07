@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>󰆍  Buka Terminal (WezTerm) di Sini</name>
+	<submenu></submenu>
+	<unique-id>1794079646727426-1</unique-id>
+	<command>wezterm start --cwd %f</command>
+	<description>Buka terminal WezTerm langsung di folder ini</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>com.visualstudio.code</icon>
+	<name>󰨞  Buka di VS Code</name>
+	<submenu></submenu>
+	<unique-id>1794079646727426-2</unique-id>
+	<command>code %f</command>
+	<description>Buka folder atau file ini di Visual Studio Code</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>git</icon>
+	<name>󰊢  Buka Lazygit di Folder Ini</name>
+	<submenu></submenu>
+	<unique-id>1794079646727426-3</unique-id>
+	<command>wezterm start --cwd %f -- lazygit</command>
+	<description>Kelola repositori Git dengan Lazygit</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>preferences-desktop-wallpaper</icon>
+	<name>󰸉  Jadikan Wallpaper Desktop</name>
+	<submenu></submenu>
+	<unique-id>1794079646727426-4</unique-id>
+	<command>sh -c 'cp -f "$1" ~/.config/sway/wallpaper.png && feh --bg-fill "$1" && notify-send "󰸉 Wallpaper Terpasang" "$(basename "$1")"' _ %f</command>
+	<description>Pasang gambar ini sebagai wallpaper desktop</description>
+	<range></range>
+	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.PNG;*.JPG</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>edit-copy</icon>
+	<name>󰅌  Salin Path Lengkap</name>
+	<submenu></submenu>
+	<unique-id>1794079646727426-5</unique-id>
+	<command>sh -c 'printf "%s" "$1" | xclip -selection clipboard && notify-send "󰅌 Path Disalin" "$1"' _ %f</command>
+	<description>Salin alamat path file/folder ke clipboard</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+</actions>
