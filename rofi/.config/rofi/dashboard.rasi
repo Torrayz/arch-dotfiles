@@ -1,0 +1,42 @@
+@import "config.rasi"
+
+* {
+    width: 310;
+}
+
+window {
+    location: northwest;
+    anchor: northwest;
+    x-offset: 8px;
+    y-offset: 32px;
+    height: 335px;
+    border: 2px;
+    border-color: #cba6f7;
+    border-radius: 12px;
+}
+
+inputbar {
+    padding: 2px;
+}
+
+prompt {
+    padding: 4px 8px;
+    margin: 6px 0px 0px 8px;
+}
+
+entry {
+    padding: 4px 6px;
+    margin: 6px 8px 0px 6px;
+    placeholder: "Filter menu...";
+}
+
+listview {
+    columns: 1;
+    lines: 10;
+    margin: 4px 8px 6px 8px;
+}
+
+element {
+    padding: 4px 8px;
+    border-radius: 6px;
+}

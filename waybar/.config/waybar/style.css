@@ -1,4 +1,4 @@
-/* Catppuccin Mocha Palette — Calibrated for 1366x768 */
+/* Catppuccin Mocha Floating Pills — Interactive Dank Style (1366x768) */
 @define-color base      #1e1e2e;
 @define-color mantle    #181825;
 @define-color crust     #11111b;
@@ -6,7 +6,6 @@
 @define-color subtext0  #a6adc8;
 @define-color surface0  #313244;
 @define-color surface1  #45475a;
-@define-color surface2  #585b70;
 @define-color overlay0  #6c7086;
 @define-color mauve     #cba6f7;
 @define-color blue      #89b4fa;
@@ -22,7 +21,6 @@
   font-size: 10px;
   font-weight: 600;
   border: none;
-  border-radius: 0;
   min-height: 0;
 }
 
@@ -34,111 +32,103 @@ window#waybar {
 tooltip {
   background: @mantle;
   border: 1px solid @mauve;
-  border-radius: 7px;
+  border-radius: 10px;
   color: @text;
 }
 
-#custom-launcher {
+#custom-dash {
   background-color: @mauve;
   color: @crust;
-  font-weight: 700;
-  padding: 0 8px;
-  border-radius: 7px;
+  font-size: 12px;
+  padding: 0 10px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
 }
 
-#custom-terminal {
-  background-color: @surface0;
-  color: @green;
-  font-size: 11px;
-  padding: 0 8px;
-  border-radius: 7px;
-  border: 1px solid @surface1;
-}
-
-#custom-keybinds {
-  background-color: @surface0;
-  color: @peach;
-  padding: 0 8px;
-  border-radius: 7px;
-  border: 1px solid @surface1;
+#custom-dash:hover {
+  background-color: @lavender;
 }
 
 #workspaces {
   background-color: @base;
   border: 1px solid @surface0;
-  border-radius: 7px;
-  padding: 1px 3px;
+  border-radius: 99px;
+  padding: 1px 6px;
 }
 
 #workspaces button {
-  padding: 0 6px;
+  padding: 0 5px;
   margin: 1px;
-  border-radius: 5px;
-  color: @subtext0;
+  border-radius: 99px;
+  color: @overlay0;
   background-color: transparent;
+  transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-  background-color: @surface0;
   color: @text;
+  background-color: @surface0;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-  background-color: @mauve;
-  color: @crust;
-  min-width: 18px;
+  color: @mauve;
+  background-color: @surface0;
+  padding: 0 8px;
 }
 
 #workspaces button.urgent {
-  background-color: @red;
-  color: @crust;
+  color: @red;
 }
 
-#mode {
-  background-color: @peach;
-  color: @crust;
-  padding: 0 8px;
-  border-radius: 7px;
-}
-
-#window {
-  background-color: @base;
-  border: 1px solid @surface0;
-  color: @subtext0;
-  padding: 0 8px;
-  border-radius: 7px;
-}
-
-window#waybar.empty #window {
-  background-color: transparent;
-  border: none;
-}
-
-#clock,
-#cpu,
-#memory,
+#custom-quickterm,
+#custom-quickcode,
+#custom-keybinds,
+#custom-clock_toggle,
+#custom-sysinfo,
 #backlight,
 #pulseaudio,
-#network,
+#custom-net_toggle,
 #battery,
 #tray {
   background-color: @base;
   border: 1px solid @surface0;
-  padding: 0 8px;
-  border-radius: 7px;
+  padding: 0 9px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
 }
 
-#clock {
-  color: @lavender;
-  border-color: @surface1;
+#custom-quickterm:hover,
+#custom-quickcode:hover,
+#custom-keybinds:hover,
+#custom-clock_toggle:hover,
+#custom-sysinfo:hover,
+#backlight:hover,
+#pulseaudio:hover,
+#custom-net_toggle:hover,
+#battery:hover {
+  background-color: @surface0;
+  border-color: @mauve;
 }
 
-#cpu {
+#custom-quickterm {
+  color: @green;
+}
+
+#custom-quickcode {
   color: @blue;
 }
 
-#memory {
+#custom-keybinds {
+  color: @peach;
+}
+
+#custom-clock_toggle {
+  color: @lavender;
+  padding: 0 12px;
+}
+
+#custom-sysinfo {
   color: @sapphire;
 }
 
@@ -151,15 +141,11 @@ window#waybar.empty #window {
 }
 
 #pulseaudio.muted {
-  color: @overlay0;
-}
-
-#network {
-  color: @green;
-}
-
-#network.disconnected {
   color: @red;
+}
+
+#custom-net_toggle {
+  color: @green;
 }
 
 #battery {
@@ -184,6 +170,11 @@ window#waybar.empty #window {
   background-color: @red;
   color: @crust;
   font-size: 11px;
-  padding: 0 8px;
-  border-radius: 7px;
+  padding: 0 9px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+}
+
+#custom-power:hover {
+  background-color: @peach;
 }
