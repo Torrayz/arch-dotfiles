@@ -22,7 +22,7 @@
     "backlight",
     "pulseaudio",
     "custom/net_toggle",
-    "battery",
+    "custom/power_status",
     "tray",
     "custom/power"
   ],
@@ -122,19 +122,12 @@
     "on-click-right": "~/.config/rofi/wifi.sh"
   },
 
-  "battery": {
-    "bat": "BAT0",
-    "adapter": "AC0",
-    "interval": 15,
-    "states": {
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{icon} {capacity}%",
-    "format-charging": "󰂄 {capacity}%",
-    "format-plugged": "󰚥 {capacity}%",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "on-click": "~/.config/polybar/scripts/hw-action.sh bat-info"
+  "custom/power_status": {
+    "exec": "~/.config/polybar/scripts/power-status.sh",
+    "interval": 2,
+    "signal": 11,
+    "tooltip-format": "Klik Kiri: Toggle Detail Power / Baterai",
+    "on-click": "~/.config/polybar/scripts/power-status.sh --toggle"
   },
 
   "tray": {

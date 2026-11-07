@@ -89,6 +89,7 @@ tooltip {
 #backlight,
 #pulseaudio,
 #custom-net_toggle,
+#custom-power_status,
 #battery,
 #tray {
   background-color: @base;
