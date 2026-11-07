@@ -142,12 +142,53 @@ config.cursor_blink_rate = 550
 config.scrollback_lines = 10000
 config.window_close_confirmation = "NeverPrompt"
 
+-- Shortcut Keyboard & Mouse untuk Salin/Tempel Cepat & Cerdas
+config.mouse_bindings = {
+  -- 1. Blok/seleksi teks dengan mouse langsung OTOMATIS tersalin ke clipboard!
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = act.CompleteSelectionOrOpenLinkAtMouseCursor("ClipboardAndPrimarySelection"),
+  },
+  -- 2. Klik Kanan untuk langsung Tempel (Paste) instan dari clipboard
+  {
+    event = { Down = { streak = 1, button = "Right" } },
+    mods = "NONE",
+    action = act.PasteFrom("Clipboard"),
+  },
+}
+
 -- Shortcut Keyboard di dalam Terminal
 config.keys = {
+  -- Smart Ctrl+C:
+  -- Jika ada teks yang diblok/diseleksi -> Salin ke clipboard & hilangkan seleksi (TIDAK mematikan program)
+  -- Jika TIDAK ada teks yang diblok -> Berfungsi normal sebagai interrupt/batal (SIGINT)
+  {
+    key = "c",
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local sel = window:get_selection_text_for_pane(pane)
+      if sel and #sel > 0 then
+        window:perform_action(act.CopyTo("ClipboardAndPrimarySelection"), pane)
+        window:perform_action(act.ClearSelection, pane)
+      else
+        window:perform_action(act.SendKey({ key = "c", mods = "CTRL" }), pane)
+      end
+    end),
+  },
+
+  -- Standar Universal: Ctrl+Shift+C (Salin) & Ctrl+Shift+V / Ctrl+V (Tempel)
+  { key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("ClipboardAndPrimarySelection") },
+  { key = "C", mods = "CTRL|SHIFT", action = act.CopyTo("ClipboardAndPrimarySelection") },
+  { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+  { key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+  { key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+  { key = "Insert", mods = "SHIFT", action = act.PasteFrom("Clipboard") },
+
+  -- Navigasi Tab Terminal
   { key = "t", mods = "CTRL", action = act.SpawnTab("CurrentPaneDomain") },
   { key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab("CurrentPaneDomain") },
-  { key = "w", mods = "CTRL", action = act.CloseCurrentTab({ confirm = false }) },
-  { key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = false }) },
+  { key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentTab({ confirm = false }) },
   { key = "n", mods = "CTRL|SHIFT", action = act.SpawnWindow },
 
   { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
@@ -158,12 +199,11 @@ config.keys = {
   { key = "4", mods = "ALT", action = act.ActivateTab(3) },
   { key = "5", mods = "ALT", action = act.ActivateTab(4) },
 
+  -- Split Terminal Horizontal / Vertikal
   { key = "d", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
   { key = "e", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 
-  { key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
-  { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
-
+  -- Ukuran Font
   { key = "=", mods = "CTRL", action = act.IncreaseFontSize },
   { key = "-", mods = "CTRL", action = act.DecreaseFontSize },
   { key = "0", mods = "CTRL", action = act.ResetFontSize },
