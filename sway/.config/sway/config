@@ -1,0 +1,248 @@
+# =============================================================================
+# Sway Configuration — Catppuccin Mocha (Optimized for Programming)
+# =============================================================================
+
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $term alacritty
+set $term_alt foot
+set $menu rofi -show drun
+set $filemanager thunar
+set $editor code
+
+# Font
+font pango:JetBrainsMono Nerd Font 10
+
+# -----------------------------------------------------------------------------
+# Catppuccin Mocha Colors
+# -----------------------------------------------------------------------------
+set $rosewater #f5e0dc
+set $flamingo  #f2cdcd
+set $pink      #f5c2e7
+set $mauve     #cba6f7
+set $red       #f38ba8
+set $maroon    #eba0ac
+set $peach     #fab387
+set $yellow    #f9e2af
+set $green     #a6e3a1
+set $teal      #94e2d5
+set $sky       #89dceb
+set $sapphire  #74c7ec
+set $blue      #89b4fa
+set $lavender  #b4befe
+set $text      #cdd6f4
+set $subtext1  #bac2de
+set $subtext0  #a6adc8
+set $overlay2  #9399b2
+set $overlay1  #7f849c
+set $overlay0  #6c7086
+set $surface2  #585b70
+set $surface1  #45475a
+set $surface0  #313244
+set $base      #1e1e2e
+set $mantle    #181825
+set $crust     #11111b
+
+# target                 title     bg    text   indicator  border
+client.focused           $mauve    $base $text  $rosewater $mauve
+client.focused_inactive  $surface1 $base $text  $rosewater $surface1
+client.unfocused         $surface0 $base $text  $rosewater $surface0
+client.urgent            $peach    $base $peach $overlay0  $peach
+client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+client.background        $base
+
+# -----------------------------------------------------------------------------
+# Appearance, Gaps & Borders
+# -----------------------------------------------------------------------------
+default_border pixel 2
+default_floating_border pixel 2
+gaps inner 6
+gaps outer 2
+smart_borders on
+
+# Solid Catppuccin Mocha Crust/Base Wallpaper (or custom image if placed at ~/.config/sway/wallpaper.png)
+output * bg #181825 solid_color
+
+# -----------------------------------------------------------------------------
+# Touchpad & Keyboard Configuration (Laptop Friendly)
+# -----------------------------------------------------------------------------
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+input type:keyboard {
+    repeat_delay 250
+    repeat_rate 35
+}
+
+# -----------------------------------------------------------------------------
+# Autostart Daemons & Services
+# -----------------------------------------------------------------------------
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec mako
+exec nm-applet --indicator
+exec wl-paste --watch cliphist store
+exec swayidle -w \
+    timeout 600 'swaylock -f -c 1e1e2e' \
+    timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -f -c 1e1e2e'
+
+# Launch Waybar
+bar {
+    swaybar_command waybar
+}
+
+# -----------------------------------------------------------------------------
+# Keybindings — Apps & Utilities
+# -----------------------------------------------------------------------------
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term_alt
+bindsym $mod+d exec $menu
+bindsym $mod+c exec $editor
+bindsym $mod+e exec $filemanager
+bindsym $mod+b exec firefox
+
+# Kill focused window (both Super+Q and Super+Shift+Q supported)
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
+
+# Clipboard history via Rofi
+bindsym $mod+v exec cliphist list | rofi -dmenu -p "󰅌 Clipboard" | cliphist decode | wl-copy
+
+# Screenshots (Grim + Slurp + Swappy)
+bindsym Print exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area disalin ke clipboard"
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
+bindsym Shift+Print exec grim - | wl-copy && notify-send "Screenshot" "Layar penuh disalin ke clipboard"
+
+# Lock screen & Power Menu
+bindsym $mod+Escape exec swaylock -f -c 1e1e2e
+bindsym $mod+Shift+e exec ~/.config/rofi/powermenu.sh
+
+# Reload Sway configuration
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r reload
+
+# -----------------------------------------------------------------------------
+# Hardware Function Keys (Audio & Brightness)
+# -----------------------------------------------------------------------------
+bindsym --locked XF86AudioRaiseVolume exec pamixer -i 5
+bindsym --locked XF86AudioLowerVolume exec pamixer -d 5
+bindsym --locked XF86AudioMute exec pamixer -t
+bindsym --locked XF86AudioMicMute exec pamixer --default-source -t
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# -----------------------------------------------------------------------------
+# Window Navigation & Management
+# -----------------------------------------------------------------------------
+floating_modifier $mod normal
+
+# Move focus (Vim keys & Arrow keys)
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split orientation
+bindsym $mod+ semicolon split h
+bindsym $mod+v split v
+
+# Layout modes
+bindsym $mod+f fullscreen
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+t layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+# -----------------------------------------------------------------------------
+# Workspaces (1 - 10)
+# -----------------------------------------------------------------------------
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# -----------------------------------------------------------------------------
+# Resize Mode (Super+R)
+# -----------------------------------------------------------------------------
+mode "resize" {
+    bindsym $left resize shrink width 20px
+    bindsym $down resize grow height 20px
+    bindsym $up resize shrink height 20px
+    bindsym $right resize grow width 20px
+
+    bindsym Left resize shrink width 20px
+    bindsym Down resize grow height 20px
+    bindsym Up resize shrink height 20px
+    bindsym Right resize grow width 20px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# -----------------------------------------------------------------------------
+# Floating Window Rules
+# -----------------------------------------------------------------------------
+for_window [app_id="pavucontrol"] floating enable, resize set 720 480
+for_window [app_id="blueman-manager"] floating enable, resize set 680 460
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="nwg-look"] floating enable
+for_window [app_id="imv"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="dialog"] floating enable
+
+include /etc/sway/config.d/*
