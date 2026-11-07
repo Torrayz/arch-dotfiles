@@ -1,48 +1,47 @@
-# Arch Linux Dotfiles — Catppuccin Mocha (Sway + Waybar & i3 + Polybar)
+# Arch Linux Dotfiles — Catppuccin Mocha (Torray Edition)
 
-Dotfiles yang ringan, smooth, dan dioptimalkan untuk programming di Arch Linux (Wayland **Sway + Waybar** & X11 **i3 + Polybar**).
+Dotfiles ringan, smooth, dan dioptimalkan untuk programming di Arch Linux (**Sway + Waybar** & **i3 + Polybar**), diselaraskan dengan keybindings dari `Torrayz/dotfilesku`.
 
-## Struktur Paket Dotfiles (GNU Stow)
-Seluruh konfigurasi dikelola menggunakan `stow` dari direktori `~/dotfiles`:
-```bash
-cd ~/dotfiles
-stow sway waybar rofi mako dunst alacritty foot zsh starship tmux vscode gtk btop fastfetch nvim i3 polybar picom
-```
+## Fitur Utama
+* **Terminal dengan GUI Tab Bar (`WezTerm`)**: Memiliki tombol **`[+]`** di bagian atas untuk menambah tab baru dan tombol **`[x]`** di setiap tab untuk menutupnya menggunakan mouse (seperti Windows Terminal / CMD), ditambah dukungan penuh gambar PNG di terminal.
+* **Custom Logo & Fastfetch (`~/logo.png`)**: Emblem custom `>_ TORRAY // ARCH` bertema Catppuccin Mocha yang otomatis tampil dengan layout box saat membuka terminal.
+* **Zsh + Starship Capsule Powerline**: Prompt modern dua baris dengan indikator OS, user, folder, Git branch/status, versi runtime (Node/Python/Rust/Go), serta jam.
+* **Spotlight App Search (`Super + Space`)**: Pencarian aplikasi cepat dengan ikon besar (2 kolom) via Rofi + tombol **`󰣇 Cari`** langsung di Navbar.
+* **Interactive Keybindings Search (`Super + ?` / `Super + K`)**: Fitur pencarian seluruh shortcut keyboard via Rofi + tombol **`󰌌 Keys`** langsung di Navbar.
 
-## Daftar Shortcut Utama (Sway & i3)
+## Daftar Shortcut (Sway & i3 — Synced dengan `Torrayz/dotfilesku`)
 
 | Shortcut | Fungsi |
 | :--- | :--- |
-| `Super + Enter` | Buka Terminal utama (`Alacritty`) |
-| `Super + Shift + Enter` | Buka Terminal Wayland ringan (`Foot`) |
-| `Super + D` | Buka App Launcher (`Rofi`) |
-| `Super + C` | Buka Code Editor (`VS Code`) |
-| `Super + E` | Buka File Manager (`Thunar`) |
-| `Super + B` | Buka Browser (`Firefox`) |
-| `Super + V` | Riwayat Clipboard (`Cliphist` + `Rofi` di Sway) |
-| `Print` / `Super + Shift + S` | Screenshot pilih area & edit (`Grim + Slurp + Swappy` / `Flameshot`) |
-| `Super + Q` / `Super + Shift + Q` | Tutup jendela aktif |
-| `Super + F` | Mode Fullscreen |
-| `Super + Shift + Space` | Toggle Floating / Tiling window |
-| `Super + H / J / K / L` | Pindah fokus jendela (atau tombol Panah) |
-| `Super + Shift + H / J / K / L` | Pindahkan posisi jendela (atau `Super + Shift + Panah`) |
-| `Super + 1..9, 0` | Pindah ke Workspace 1 - 10 |
-| `Super + Shift + 1..9, 0` | Pindahkan jendela ke Workspace 1 - 10 |
-| `Super + R` | Masuk ke mode Resize jendela (`Esc` / `Enter` untuk keluar) |
-| `Super + Escape` | Kunci layar (`swaylock` / `i3lock`) |
-| `Super + Shift + C` / `Super + Shift + R` | Reload konfigurasi WM |
-| `Super + Shift + E` | Buka Power Menu (Lock, Suspend, Logout, Reboot, Shutdown) |
+| **`Super + Space`** (atau `Super + D`) | **Cari & Buka Aplikasi (Spotlight Search)** |
+| **`Super + T`** / **`Super + Enter`** | **Buka Terminal (`WezTerm` — dengan Tab `[+]` & `[x]`)** |
+| **`Super + Shift + Enter`** | Buka Terminal alternatif (`Kitty`) |
+| **`Super + ?`** (`Super+Shift+/`) / **`Super + K`** | **Cari Keybindings (Cheat-Sheet Interaktif)** |
+| **`Super + C`** | Buka Code Editor (`VS Code`) |
+| **`Super + E`** | Buka File Manager (`Thunar`) |
+| **`Super + B`** | Buka Browser (`Firefox`) |
+| **`Super + V`** | Riwayat Clipboard (`Cliphist` + `Rofi`) |
+| **`Super + M`** / **`Ctrl + Alt + Del`** | Buka System Monitor & Process List (`btop`) |
+| **`Super + Q`** | Tutup jendela aktif |
+| **`Super + F`** | Mode Fullscreen |
+| **`Super + Shift + T`** | Toggle Floating / Tiling window |
+| **`Super + W`** | Toggle Tabbed / Group window |
+| **`Super + R`** | Toggle arah Split (Horizontal / Vertikal) |
+| **`Super + Ctrl + Panah`** | **Resize ukuran jendela langsung** (tanpa masuk mode resize) |
+| **`Super + Panah`** / **`H, J, K, L`** | Pindah fokus jendela |
+| **`Super + Shift + Panah`** / **`H, J, K, L`** | Pindahkan posisi jendela |
+| **`Super + 1..9, 0`** | Pindah ke Workspace 1 - 10 |
+| **`Super + Shift + 1..9, 0`** | Pindahkan jendela ke Workspace 1 - 10 |
+| **`F10`** / **`Print`** / **`Super + Alt + S`** | Screenshot area pilih & edit |
+| **`Super + G`** | **Terjemahkan teks yang diblok ke Bahasa Indonesia** |
+| **`Super + Shift + G`** | **Terjemahkan teks yang diblok ke Bahasa Inggris** |
+| **`Super + Alt + L`** / **`Super + Ctrl + L`** | Kunci layar (`swaylock` / `i3lock`) |
+| **`Super + Shift + E`** / **`Super + Ctrl + Q`** | Buka Power Menu (Lock, Suspend, Logout, Restart, Shutdown) |
 
-## Shortcut Terminal & Tmux
-* **Alias Zsh**:
-  * `c` → Buka VS Code di folder saat ini (`code .`)
-  * `v` → Buka Neovim (`nvim`)
-  * `lg` → Buka UI Git (`lazygit`)
-  * `ll` / `lt` → Lihat daftar file & pohon direktori dengan ikon (`eza`)
-  * `z <nama-folder>` → Lompat cepat ke direktori (`zoxide`)
-  * `Ctrl + R` → Cari riwayat perintah dengan `fzf`
-  * `Ctrl + T` → Cari file cepat dengan `fzf`
-* **Tmux**:
-  * `Ctrl+B` lalu `|` → Split layar kanan-kiri
-  * `Ctrl+B` lalu `-` → Split layar atas-bawah
-  * `Alt + H / J / K / L` → Pindah antar pane tanpa prefix
+## Shortcut di Dalam Terminal (`WezTerm`)
+* **Klik tombol `[+]` di bar atas** atau tekan **`Ctrl + T`** → Tambah Tab Terminal baru
+* **Klik tombol `[x]` di tab** atau tekan **`Ctrl + W`** → Tutup Tab Terminal
+* **`Ctrl + Tab`** / **`Alt + 1..5`** → Pindah antar Tab Terminal
+* **`Ctrl + Shift + D`** → Split layar terminal kanan-kiri
+* **`Ctrl + Shift + E`** → Split layar terminal atas-bawah
+* **`Ctrl + [+]` / `[-]`** → Perbesar / perkecil ukuran font terminal
