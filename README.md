@@ -1,70 +1,150 @@
-# 󰣇 Torray Arch Dotfiles — Catppuccin Mocha (i3/Polybar & Sway/Waybar)
+<div align="center">
 
-Konfigurasi **Arch Linux** ringan, *smooth*, dan siap *programming* dengan palet **Catppuccin Mocha**, dikalibrasi presisi untuk resolusi layar **`1366x768`** dengan *zero-fork* *scripts* dan *native GTK3 plugins*.
+<img src="assets/banner.png" alt="Torray Arch Dotfiles Banner" width="100%" />
 
----
+# 󰣇 Torray Arch Dotfiles — Catppuccin Mocha
 
-## ✨ Fitur Utama
+**A lightweight, zero-fork, developer-focused Arch Linux desktop environment (`i3 + Polybar` & `Sway + Waybar`) calibrated for `1366x768` displays with custom native GTK3 plugins.**
 
-1. **Proportional Inset-Pill Navbar (`Polybar` & `Waybar`)**:
-   - **Workspace Live App Logos (`workspaces.py`)**: Menampilkan logo aplikasi aktif (`󰆍` WezTerm, `󰨞` VS Code, `󰈹` Firefox, `󰉋` Thunar, `` Neovim, `󰻠` btop) secara *real-time* (Event-driven i3 IPC, `0.0% CPU`).
-   - **Tengah Navbar (`[  Hub ]` & Musik Dinamis)**:
-     - Animasi *equalizer* lagu (`󰎆 ▂▅▇▃ Judul`) otomatis muncul di tengah **hanya saat musik sedang diputar (`Playing`)**.
-     - Klik kiri pada animasi musik atau `[  Hub ]` membuka **Torray Hub** tepat di tengah bawah navbar.
-   - **Indikator Ukuran Jendela Global (`[ 󰊓 Full / S / M / L ]`)**: Ubah ukuran aplikasi aktif dengan sekali klik atau `Super + Z`.
+![Arch Linux](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)
+![Catppuccin Mocha](https://img.shields.io/badge/Theme-Catppuccin_Mocha-cba6f7?style=for-the-badge)
+![Window Manager](https://img.shields.io/badge/WM-i3_%2F_Sway-89b4fa?style=for-the-badge)
+![Terminal](https://img.shields.io/badge/Terminal-WezTerm-a6e3a1?style=for-the-badge)
+![GTK3](https://img.shields.io/badge/Plugins-Native_GTK3_%2B_Cairo-fab387?style=for-the-badge)
 
-2. **Native GTK3 Control Center — `Torray Hub v2` (`torray-hub.py`)**:
-   - **4 Tab Lengkap**:
-     - `󰒓 Kontrol`: Live Telemetry (CPU/RAM/Suhu/Disk), Slider Audio & Kecerahan Layar, *Smart Toggles* (`Anti-Sleep`, `Fokus DND`, `Eye Care`), dan *Quick Launchers*.
-     - `󰎆 Musik`: Live 28-Bar Cairo Audio Spectrum Visualizer dengan 3 tema warna (`🌈 Cyber`, `🟣 Mauve`, `🟢 Matrix`) & kontrol MPRIS.
-     - `󰸉 Tema`: Studio Wallpaper Visual, pengatur *Window Gaps* (`0px / 4px / 10px`), dan preset ukuran aplikasi (`S / M / L / PiP / Full`).
-     - `󰨞 Dev`: *Active Localhost Port Killer* (satu klik *kill* port Node/Python/Go yang nyangkut), *Screen Color Picker* (HEX ke clipboard), dan *Lazygit*.
-   - Mendukung tombol pengubah ukuran **`[ 󰊓 S / M / L ]`** di pojok kanan atas.
-
-3. **Visual Clipboard Manager ala Windows 11 — `Torray Clip` (`Super + V`)**:
-   - Menyimpan riwayat **Teks** maupun **Screenshot / Gambar** lengkap dengan *thumbnail* visual (`~/.cache/torray-clip`).
-   - Fitur *Search* instan, *Pin* (`󰐃`), *Auto-Paste* (`󰅌 Tempel`), dan tombol ukuran **`[ 󰊓 S / M / L ]`**.
-
-4. **Terminal `WezTerm` dengan GUI Tab Berwarna**:
-   - Mendukung *Kitty Graphics Protocol* (menampilkan logo PNG `~/logo.png` di `fastfetch`).
-   - Setiap tab memiliki *badge* warna-warni Catppuccin berbeda + ikon proses aktif, tombol **`[ + ]` Hijau Emerald**, dan tombol **`[ x ]` Merah Coral**.
-
-5. **Custom Catppuccin `Thunar` File Manager**:
-   - Tema gelap *Catppuccin Mocha* (`gtk.css`), *zoom* kompak, *bookmarks* developer, dan menu *Klik Kanan* khusus (`Buka Terminal di Sini`, `Buka di VS Code`, `Salin Path`).
+</div>
 
 ---
 
-## ⌨️ Pintasan Keyboard Utama (Keybindings)
+## 🖼️ Visual Showcase
 
-| Pintasan | Fungsi |
+### 1. Colorful WezTerm GUI Tabs & Multi-Box Fastfetch Dashboard
+Custom **WezTerm** configuration with per-tab Catppuccin color badges, active process icons, an emerald **`[ + ]`** new-tab button, coral **`[ ✕ ]`** close buttons, and a **4-section color-coded Fastfetch dashboard** featuring hardware progress bars, live weather, audio level, and active media playback:
+
+<div align="center">
+  <img src="assets/fastfetch-preview.png" alt="WezTerm & Custom Fastfetch Preview" width="94%" />
+</div>
+
+---
+
+### 2. Centered `Torray Hub v2` (Native GTK3 Control Center)
+Accessible right from the center of the navbar (`[  Hub ]` or `Super + N` / `Super + P`), **Torray Hub v2** drops down at the top-center of your screen with **4 specialized tabs** and a dynamic **`[ 󰊓 S / M / L ]`** window size switcher:
+
+| `󰒓 Control & Live Weather` (`Super + N`) | `󰎆 28-Bar Audio Visualizer` (`Super + P`) |
+| :---: | :---: |
+| <img src="assets/torray-hub-dash.png" alt="Torray Hub Control & Weather Tab" width="100%" /> | <img src="assets/torray-hub-music.png" alt="Torray Hub 28-Bar Music Visualizer" width="100%" /> |
+| **Pure-Python Telemetry** (`CPU / RAM / Temp / Disk`), **Live Local Weather (`wttr.in`)**, **Volume & Brightness Sliders**, and **Smart Toggles** (`Anti-Sleep`, `DND Focus`, `Eye Care`). | **60 FPS Cairo Spectrum Equalizer** with **3 color themes** (`🌈 Cyber`, `🟣 Mauve`, `🟢 Matrix`) and full MPRIS media controls. |
+
+---
+
+### 3. `Torray Clip` — Windows 11-Style Visual Clipboard (`Super + V`)
+An event-driven GTK3 clipboard manager that captures **both copied text snippets AND screenshots/images** with visual thumbnails, instant search filtering, item pinning (`󰐃`), one-click auto-paste (`󰅌`), and resizable `S / M / L` presets:
+
+<div align="center">
+  <img src="assets/clipboard-preview.png" alt="Torray Clip Super+V Visual Clipboard" width="58%" />
+</div>
+
+---
+
+## ✨ Key Architecture & Performance Highlights
+
+- **Proportional Inset-Pill Navbar (`Polybar` & `Waybar`)**:
+  - **Live App Logos inside Workspaces (`workspaces.py`)**: Subscribes directly to the i3/Sway IPC socket (`0.0% idle CPU`) and renders live Nerd Font icons (`󰆍` WezTerm, `󰨞` VS Code, `󰈹` Firefox, `󰉋` Thunar, `` Neovim, `󰻠` btop) inside each workspace pill.
+  - **Dynamic Center Music Equalizer (`media.sh`)**: The animated music pill (`󰎆 ▂▅▇▃ Song Title`) automatically appears in the center of the bar **only when audio is actively `Playing`**, and hides cleanly when paused or stopped. Clicking it opens `Torray Hub` directly on the Music Visualizer tab.
+  - **Zero-Fork Bash Builtin Scripts**: `sysinfo.sh`, `net.sh`, `power-status.sh`, and `clock.sh` read `/proc/stat`, `/proc/meminfo`, `/proc/net/wireless`, and `/sys/class/power_supply` directly using pure Bash builtins (`read`, `printf '%(...)T'`) without spawning `awk`, `sed`, `free`, `cat`, or `sleep` subprocesses.
+- **Smart Window Sizing (`win-layout.sh`)**:
+  - **`Super + F` (Full Below Navbar)**: Maximizes the active window to `1356x723` right below the navbar—keeping the top bar and your browser tabs visible at all times.
+  - **`Super + Shift + F` (True Fullscreen)**: Triggers hardware fullscreen (hiding the navbar) for cinema/video playback.
+  - **`Super + Z` (Global Size Cycle)**: Cycles any window through **`S` (`720x460`) → `M` (`980x600`) → `L` (`1200x680`) → `Full` (`Tiling`)**, also clickable directly from the navbar's `[ 󰊓 Full ]` pill.
+- **Developer Utilities Built Into `Torray Hub` (`󰨞 Dev` Tab)**:
+  - **Localhost Port Killer**: Scans active listening TCP ports (`:3000`, `:5173`, `:8000`, `:8080`, etc.) and lets you terminate stuck Node/Python/Go servers with a single click.
+  - **Screen Color Picker**: Samples any pixel on screen and copies its `#HEX` code straight to your clipboard.
+- **Custom Catppuccin `Thunar` File Manager**:
+  - Styled with a dark Mocha `gtk.css` theme, developer sidebar bookmarks, compact icon view, and custom right-click actions (`Open Terminal Here`, `Open in VS Code`, `Copy Path`).
+
+---
+
+## ⌨️ Keyboard Shortcuts Reference
+
+### 🚀 Core Applications & Custom Plugins
+| Shortcut | Action |
 | :--- | :--- |
-| **`Super + N`** | Buka **Torray Hub** (Tab Kontrol) di tengah |
-| **`Super + P`** | Buka **Torray Hub** (Tab Musik & Visualizer) |
-| **`Super + Shift + W`** | Buka **Torray Hub** (Tab Studio Wallpaper & Tema) |
-| **`Super + V`** | Buka **Visual Clipboard History** (Teks & Screenshot) |
-| **`Super + T`** / **`Super + Enter`** | Buka Terminal **WezTerm** |
-| **`Super + C`** | Buka **VS Code** |
-| **`Super + E`** | Buka File Manager **Thunar** |
-| **`Super + B`** | Buka Browser **Firefox** |
-| **`Super + Space`** | Buka **Rofi Application Launcher** |
-| **`Super + /`** / **`Super + Ctrl + K`** | Buka Daftar Pencarian **Keybindings** |
-| **`Super + F`** | **Ukuran Full di Bawah Navbar** (Navbar & Tab Browser tetap aman) |
-| **`Super + Shift + F`** | **Fullscreen Versi Maks** (Sembunyikan Navbar / Mode Bioskop) |
-| **`Super + Z`** | Putar ukuran aplikasi aktif: **`S` → `M` → `L` → `Full`** |
-| **`Super + Shift + Space`** | Toggle aplikasi **Mengambang di Tengah** (`900x540`) |
-| **`Super + Alt + 1 / 2 / 3 / 4 / 0`** | Preset Ukuran: `[1]` S, `[2]` M, `[3]` L, `[4]` PiP Pojok, `[0]` Tiling |
-| **`Super + Ctrl + Shift + Panah`** | Ubah ukuran lebar/tinggi aplikasi secara manual |
-| **`Super + =` / `Super + -`** | Perbesar / perkecil lebar & tinggi sekaligus |
-| **`Super + 1..9, 0`** | Pindah ke Workspace `1 - 10` |
-| **`Super + Shift + 1..9, 0`** | Pindahkan aplikasi ke Workspace `1 - 10` + kamera ikut berpindah |
-| **`Super + Q`** | Tutup jendela aplikasi aktif |
+| **`Super + N`** | Open **Torray Hub** (`󰒓 Control & Live Weather` tab) |
+| **`Super + P`** | Open **Torray Hub** (`󰎆 Music & 28-Bar Visualizer` tab) |
+| **`Super + Shift + W`** | Open **Torray Hub** (`󰸉 Wallpaper Studio & Theme` tab) |
+| **`Super + V`** | Open **Torray Clip** (Visual Text & Screenshot Clipboard History) |
+| **`Super + T`** / **`Super + Enter`** | Launch **WezTerm** Terminal |
+| **`Super + C`** | Launch **VS Code** |
+| **`Super + E`** | Launch **Thunar** File Manager |
+| **`Super + B`** | Launch **Firefox** Browser |
+| **`Super + Space`** | Open **Rofi** Application Launcher |
+| **`Super + /`** / **`Super + Ctrl + K`** | Open Interactive **Keybindings Search Menu** |
+| **`Super + X`** | Open **Power Menu** (`Lock`, `Logout`, `Reboot`, `Shutdown`) |
+| **`Super + Q`** | Close Focused Window |
+
+### 📐 Window Sizing, Layout & Navigation
+| Shortcut | Action |
+| :--- | :--- |
+| **`Super + F`** | **Full Window Below Navbar** (Navbar & browser tabs remain visible) |
+| **`Super + Shift + F`** | **True Max Fullscreen** (Hides navbar / cinema mode) |
+| **`Super + Z`** | Cycle Active Window Size: **`S` → `M` → `L` → `Full`** |
+| **`Super + Shift + Space`** | Toggle Floating Mode (auto-centered at `900x540`) |
+| **`Super + Alt + 1 / 2 / 3 / 4 / 0`** | Quick Size Presets: `[1]` Small, `[2]` Medium, `[3]` Large, `[4]` PiP Corner, `[0]` Tiling |
+| **`Super + Ctrl + Shift + Arrows`** | Fine-grain manual window resize (Width / Height) |
+| **`Super + =`** / **`Super + -`** | Grow / Shrink window width & height simultaneously |
+| **`Super + Arrows`** or **`H / J / K / L`** | Move focus between windows |
+| **`Super + Shift + Arrows`** | Move window position |
+| **`Super + 1..9, 0`** | Switch to Workspace `1 – 10` |
+| **`Super + Shift + 1..9, 0`** | Move window to Workspace `1 – 10` **and follow it automatically** |
+
+### 📸 Screenshots & Hardware Controls
+| Shortcut | Action |
+| :--- | :--- |
+| **`Print`** / **`Super + Shift + S`** | Interactive Area Screenshot (Copied to clipboard & saved to `Torray Clip`) |
+| **`Shift + Print`** | Fullscreen Screenshot saved to `~/Pictures/Screenshots/` |
+| **`XF86AudioRaiseVolume / Lower`** | Volume Up / Down (`±5%`) with live OSD notification |
+| **`XF86MonBrightnessUp / Down`** | Screen Brightness Up / Down (`±5%`) with live OSD notification |
 
 ---
 
-## 🚀 Instalasi Cepat (GNU Stow)
+## 📂 Repository Structure (GNU Stow Ready)
+
+```text
+~/dotfiles
+├── assets/         # Visual banners, Fastfetch preview, and GTK3 plugin screenshots
+├── alacritty/      # Alacritty terminal config (Catppuccin Mocha)
+├── btop/           # btop++ system monitor config & theme
+├── dunst/          # Dunst X11 notification daemon
+├── fastfetch/      # 4-section colorful Fastfetch dashboard + custom Cyber Arch logo
+├── foot/           # Foot Wayland terminal config
+├── gtk/            # GTK-3.0 / GTK-4.0 dark theme, Thunar CSS, and sidebar bookmarks
+├── i3/             # i3wm X11 window manager config (1366x768 calibrated)
+├── kitty/          # Kitty terminal config
+├── mako/           # Mako Wayland notification daemon
+├── nvim/           # Neovim Lua configuration
+├── picom/          # Picom v13 compositor (GLX tear-free + smooth spring animations)
+├── polybar/        # Polybar config + Torray Hub + Torray Clip + zero-fork scripts
+├── rofi/           # Rofi launcher, Wi-Fi menu, powermenu, and keybinding viewer
+├── starship/       # Starship cross-shell prompt
+├── sway/           # Sway Wayland compositor config
+├── thunar/         # Thunar file manager settings & custom right-click actions
+├── tmux/           # Tmux multiplexer config
+├── vscode/         # VS Code settings (Catppuccin + JetBrainsMono Nerd Font)
+├── waybar/         # Waybar config & CSS matching the Polybar inset-pill layout
+├── wezterm/        # WezTerm config with colorful GUI tabs & Kitty graphics protocol
+└── zsh/            # Zsh configuration, aliases, and autosuggestions
+```
+
+---
+
+## ⚡ Quick Installation
+
+Clone this repository into `~/dotfiles` and run the automated `GNU Stow` installer:
 
 ```bash
 git clone https://github.com/Torrayz/arch-dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
+
+Reload your window manager anytime with **`Super + Shift + R`** (`i3`) or **`Super + Shift + C`** (`Sway`).

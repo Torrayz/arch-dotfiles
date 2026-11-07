@@ -253,9 +253,9 @@ def apply_wallpaper(path):
 
 class TorrayHub(Gtk.Window):
     SIZES = [
-        (385, 300, "S"),
-        (490, 410, "M"),
-        (620, 510, "L"),
+        (390, 332, "S"),
+        (490, 425, "M"),
+        (620, 520, "L"),
     ]
 
     def __init__(self, start_tab="dash"):
@@ -343,7 +343,7 @@ class TorrayHub(Gtk.Window):
 
         GLib.timeout_add(60, self.animate_visualizer)
         GLib.timeout_add(1200, self.refresh_status)
-        GLib.idle_add(self.refresh_status)
+        self.refresh_status()
 
     def switch_tab(self, tab_id):
         if tab_id not in self.tab_btns:
@@ -389,6 +389,23 @@ class TorrayHub(Gtk.Window):
         self.telem_lbl = Gtk.Label(label="󰻠 CPU --%   •   󰍛 RAM --   •   󰔏 --°C   •   󰋊 Disk --%")
         self.telem_lbl.get_style_context().add_class("telemetry-bar")
         box.pack_start(self.telem_lbl, False, False, 0)
+
+        # Live Weather Card
+        w_card = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        w_card.get_style_context().add_class("card")
+        self.weather_lbl = Gtk.Label(label="󰖕 Memuat cuaca lokal...")
+        self.weather_lbl.set_ellipsize(Pango.EllipsizeMode.END)
+        self.weather_lbl.set_max_width_chars(42)
+        self.weather_lbl.set_xalign(0)
+        self.weather_lbl.get_style_context().add_class("song-title")
+        w_card.pack_start(self.weather_lbl, True, True, 0)
+
+        w_ref = Gtk.Button(label="󰑐")
+        w_ref.get_style_context().add_class("action-btn")
+        w_ref.set_tooltip_text("Perbarui info cuaca")
+        w_ref.connect("clicked", self.refresh_weather_force)
+        w_card.pack_end(w_ref, False, False, 0)
+        box.pack_start(w_card, False, False, 0)
 
         # Sliders Card
         s_card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
@@ -890,9 +907,28 @@ class TorrayHub(Gtk.Window):
         return False
 
     def refresh_status(self):
-        # Update Telemetry Strip
-        mem = run_cmd("free -h | awk '/^Mem:/ {print $3}' | sed 's/i//g'") or "N/A"
-        disk = run_cmd("df -h / | awk 'NR==2 {print $5}'") or "N/A"
+        # 1. Pure-Python Telemetry Strip (Zero subprocess forks!)
+        try:
+            mem_total, mem_avail = 0, 0
+            with open("/proc/meminfo") as mf:
+                for line in mf:
+                    if line.startswith("MemTotal:"):
+                        mem_total = int(line.split()[1])
+                    elif line.startswith("MemAvailable:"):
+                        mem_avail = int(line.split()[1])
+                        break
+            used_gb = (mem_total - mem_avail) / (1024 * 1024)
+            mem = f"{used_gb:.1f}G"
+        except Exception:
+            mem = "N/A"
+
+        try:
+            st = os.statvfs("/")
+            disk_pct = int(((st.f_blocks - st.f_bfree) / st.f_blocks) * 100)
+            disk = f"{disk_pct}%"
+        except Exception:
+            disk = "N/A"
+
         temp = "N/A"
         for tz in glob.glob("/sys/class/thermal/thermal_zone*/temp"):
             try:
@@ -901,24 +937,60 @@ class TorrayHub(Gtk.Window):
                 break
             except Exception:
                 pass
-        load = run_cmd("awk '{printf \"%.0f%%\", $1 * 25}' /proc/loadavg") or "0%"
+
+        try:
+            with open("/proc/loadavg") as lf:
+                load_val = min(100, int(float(lf.read().split()[0]) * 25))
+            load = f"{load_val}%"
+        except Exception:
+            load = "0%"
+
         self.telem_lbl.set_text(f"󰻠 CPU {load}   •   󰍛 {mem}   •   󰔏 {temp}   •   󰋊 {disk}")
 
-        # Update Media Status
-        status = run_cmd("playerctl status")
-        self.is_playing = status == "Playing"
-        if status in ("Playing", "Paused"):
-            title = run_cmd("playerctl metadata xesam:title") or "Media Stream"
-            artist = run_cmd("playerctl metadata xesam:artist") or status
+        # 2. Instant Weather from RAM cache (/tmp/torray_weather_cache)
+        w_cache = "/tmp/torray_weather_cache"
+        if os.path.exists(w_cache):
+            try:
+                with open(w_cache) as wf:
+                    parts = wf.read().strip().split("|")
+                if len(parts) >= 6:
+                    city = parts[0].split(",")[0].strip()
+                    icon = parts[1].strip()
+                    wtemp = parts[2].strip().lstrip("+")
+                    cond = parts[3].strip()
+                    hum = parts[4].strip()
+                    wind = parts[5].strip()
+                    self.weather_lbl.set_text(f"{icon} {wtemp} • {cond} ({city}) • 󰖎 {hum} 󰖝 {wind}")
+            except Exception:
+                pass
+        else:
+            subprocess.Popen("setsid -f ~/.config/polybar/scripts/weather.sh >/dev/null 2>&1", shell=True)
+
+        # 3. Single-Call Media Status
+        m_raw = run_cmd("playerctl metadata --format '{{status}}|{{title}}|{{artist}}'")
+        if m_raw and "|" in m_raw:
+            m_parts = m_raw.split("|", 2)
+            status = m_parts[0]
+            title = m_parts[1] or "Media Stream"
+            artist = (m_parts[2] if len(m_parts) > 2 else "") or status
+            self.is_playing = status == "Playing"
             icon = "󰎆" if self.is_playing else "󰏤"
             self.dash_song_lbl.set_text(f"{icon} {title}")
             self.music_title.set_text(title)
             self.music_artist.set_text(f"{artist}  •  ({status})")
         else:
+            self.is_playing = False
             self.dash_song_lbl.set_text("󰎆 Belum ada musik diputar")
             self.music_title.set_text("Belum Ada Musik Diputar")
             self.music_artist.set_text("Putar lagu di YouTube / Spotify / MPV")
         return True
+
+    def refresh_weather_force(self, _btn):
+        self.weather_lbl.set_text("󰖕 Memperbarui cuaca...")
+        subprocess.Popen(
+            "~/.config/polybar/scripts/weather.sh --refresh",
+            shell=True,
+        )
 
     def on_vol_changed(self, scale):
         val = int(scale.get_value())

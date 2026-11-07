@@ -1,70 +1,159 @@
-// Compact Catnap Layout + Small Custom Logo (Calibrated for 1366x768)
+// =============================================================================
+// Torray Custom Fastfetch — Multi-Box Colorful Catppuccin Mocha Dashboard
+// Includes Custom Cyber Arch Logo, Visual Progress Bars, Live Weather & Media
+// =============================================================================
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
         "type": "kitty-direct",
         "source": "/home/torray/logo.png",
-        "width": 16,
-        "height": 8,
+        "width": 26,
+        "height": 14,
         "padding": {
-            "top": 0,
+            "top": 1,
             "left": 1,
-            "right": 2
+            "right": 3
         }
     },
     "display": {
-        "separator": " "
+        "separator": " ",
+        "color": {
+            "keys": "35",
+            "title": "35"
+        },
+        "bar": {
+            "char": {
+                "elapsed": "━",
+                "total": "─"
+            },
+            "border": {
+                "left": "[",
+                "right": "]"
+            },
+            "width": 10
+        },
+        "percent": {
+            "type": 3,
+            "green": 50,
+            "yellow": 80
+        }
     },
     "modules": [
         {
-            "key": "╭──────────╮",
-            "type": "custom"
+            "type": "custom",
+            "key": "{#35}╭─ 󰣇 SYSTEM & IDENTITY ────╮"
         },
         {
-            "key": "│ {#35} user   {#keys}│",
             "type": "title",
-            "format": "{user-name}@{host-name}"
+            "key": "{#35}│ {#95} User     {#35}│",
+            "format": "{#95}{user-name}{#37}@{#96}{host-name}"
         },
         {
-            "key": "│ {#36}{icon} distro {#keys}│",
-            "type": "os"
+            "type": "os",
+            "key": "{#35}│ {#96}󰣇 Distro   {#35}│",
+            "format": "{pretty-name} ({arch})"
         },
         {
-            "key": "│ {#31} kernel {#keys}│",
-            "type": "kernel"
+            "type": "host",
+            "key": "{#35}│ {#94}󰌢 Machine  {#35}│",
+            "format": "{name}"
         },
         {
-            "key": "│ {#34} wm     {#keys}│",
-            "type": "wm"
+            "type": "kernel",
+            "key": "{#35}│ {#91} Kernel   {#35}│",
+            "format": "{sysname} {release}"
         },
         {
-            "key": "│ {#33}󰏖 pkgs   {#keys}│",
-            "type": "packages"
+            "type": "uptime",
+            "key": "{#35}│ {#93}󰅐 Uptime   {#35}│"
         },
         {
-            "key": "│ {#32}󰍛 cpu    {#keys}│",
-            "type": "cpu"
+            "type": "packages",
+            "key": "{#35}│ {#92}󰏖 Packages {#35}│"
         },
         {
-            "key": "│ {#35} memory {#keys}│",
-            "type": "memory"
+            "type": "custom",
+            "key": "{#34}├─ 󰖲 DESKTOP & DEV ENV ────┤"
         },
         {
-            "key": "│ {#32} batt   {#keys}│",
-            "type": "battery"
+            "type": "wm",
+            "key": "{#34}│ {#94}󰖲 WM / Bar {#34}│",
+            "format": "{pretty-name} ({protocol-name}) + Polybar"
         },
         {
-            "key": "├──────────┤",
-            "type": "custom"
+            "type": "terminal",
+            "key": "{#34}│ {#95}󰆍 Terminal {#34}│"
         },
         {
-            "key": "│ {#39} colors {#keys}│",
+            "type": "shell",
+            "key": "{#34}│ {#92}󰞷 Shell    {#34}│"
+        },
+        {
+            "type": "terminalfont",
+            "key": "{#34}│ {#96}󰙯 Font     {#34}│"
+        },
+        {
+            "type": "display",
+            "key": "{#34}│ {#93}󰍹 Display  {#34}│",
+            "compactType": "original-with-refresh-rate"
+        },
+        {
+            "type": "custom",
+            "key": "{#32}├─ 󰻠 HARDWARE & TELEMETRY ─┤"
+        },
+        {
+            "type": "cpu",
+            "key": "{#32}│ {#92}󰍛 CPU      {#32}│",
+            "temp": true
+        },
+        {
+            "type": "gpu",
+            "key": "{#32}│ {#96}󰢮 GPU      {#32}│",
+            "format": "{name}"
+        },
+        {
+            "type": "memory",
+            "key": "{#32}│ {#95} Memory   {#32}│"
+        },
+        {
+            "type": "disk",
+            "key": "{#32}│ {#93}󰋊 Disk (/) {#32}│",
+            "folders": "/"
+        },
+        {
+            "type": "battery",
+            "key": "{#32}│ {#92}󰁹 Battery  {#32}│"
+        },
+        {
+            "type": "custom",
+            "key": "{#33}├─ 󰤨 LIVE STATUS & MEDIA ──┤"
+        },
+        {
+            "type": "localip",
+            "key": "{#33}│ {#96}󰩟 Local IP {#33}│",
+            "compact": true
+        },
+        {
+            "type": "command",
+            "key": "{#33}│ {#93}󰖕 Weather  {#33}│",
+            "text": "~/.config/polybar/scripts/weather.sh"
+        },
+        {
+            "type": "sound",
+            "key": "{#33}│ {#94}󰕾 Audio    {#33}│"
+        },
+        {
+            "type": "media",
+            "key": "{#33}│ {#95}󰎆 Playing  {#33}│"
+        },
+        {
             "type": "colors",
+            "key": "{#33}│ {#97} Palette  {#33}│",
             "symbol": "circle"
         },
         {
-            "key": "╰──────────╯",
-            "type": "custom"
+            "type": "custom",
+            "key": "{#33}╰──────────────────────────╯"
         }
     ]
 }
