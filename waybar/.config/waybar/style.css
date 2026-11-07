@@ -1,4 +1,4 @@
-/* Catppuccin Mocha Palette */
+/* Catppuccin Mocha Palette — Calibrated for 1366x768 */
 @define-color base      #1e1e2e;
 @define-color mantle    #181825;
 @define-color crust     #11111b;
@@ -19,7 +19,7 @@
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 600;
   border: none;
   border-radius: 0;
@@ -34,7 +34,7 @@ window#waybar {
 tooltip {
   background: @mantle;
   border: 1px solid @mauve;
-  border-radius: 10px;
+  border-radius: 7px;
   color: @text;
 }
 
@@ -42,41 +42,40 @@ tooltip {
   background-color: @mauve;
   color: @crust;
   font-weight: 700;
-  padding: 0 12px;
-  border-radius: 10px;
+  padding: 0 8px;
+  border-radius: 7px;
 }
 
 #custom-terminal {
   background-color: @surface0;
   color: @green;
-  font-size: 15px;
-  padding: 0 11px;
-  border-radius: 10px;
+  font-size: 11px;
+  padding: 0 8px;
+  border-radius: 7px;
   border: 1px solid @surface1;
 }
 
 #custom-keybinds {
   background-color: @surface0;
   color: @peach;
-  padding: 0 11px;
-  border-radius: 10px;
+  padding: 0 8px;
+  border-radius: 7px;
   border: 1px solid @surface1;
 }
 
 #workspaces {
   background-color: @base;
   border: 1px solid @surface0;
-  border-radius: 10px;
-  padding: 2px 4px;
+  border-radius: 7px;
+  padding: 1px 3px;
 }
 
 #workspaces button {
-  padding: 0 9px;
-  margin: 2px;
-  border-radius: 7px;
+  padding: 0 6px;
+  margin: 1px;
+  border-radius: 5px;
   color: @subtext0;
   background-color: transparent;
-  transition: all 0.15s ease-in-out;
 }
 
 #workspaces button:hover {
@@ -88,7 +87,7 @@ tooltip {
 #workspaces button.active {
   background-color: @mauve;
   color: @crust;
-  min-width: 26px;
+  min-width: 18px;
 }
 
 #workspaces button.urgent {
@@ -99,16 +98,16 @@ tooltip {
 #mode {
   background-color: @peach;
   color: @crust;
-  padding: 0 10px;
-  border-radius: 10px;
+  padding: 0 8px;
+  border-radius: 7px;
 }
 
 #window {
   background-color: @base;
   border: 1px solid @surface0;
   color: @subtext0;
-  padding: 0 12px;
-  border-radius: 10px;
+  padding: 0 8px;
+  border-radius: 7px;
 }
 
 window#waybar.empty #window {
@@ -126,8 +125,8 @@ window#waybar.empty #window {
 #tray {
   background-color: @base;
   border: 1px solid @surface0;
-  padding: 0 11px;
-  border-radius: 10px;
+  padding: 0 8px;
+  border-radius: 7px;
 }
 
 #clock {
@@ -184,7 +183,7 @@ window#waybar.empty #window {
 #custom-power {
   background-color: @red;
   color: @crust;
-  font-size: 14px;
-  padding: 0 12px 0 10px;
-  border-radius: 10px;
+  font-size: 11px;
+  padding: 0 8px;
+  border-radius: 7px;
 }

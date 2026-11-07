@@ -1,24 +1,24 @@
 [global]
     monitor = 0
     follow = mouse
-    width = 340
-    height = (0, 120)
+    width = 260
+    height = (0, 85)
     origin = top-right
-    offset = (12, 46)
+    offset = (8, 30)
     scale = 0
-    notification_limit = 5
+    notification_limit = 4
     progress_bar = true
     indicate_hidden = yes
     transparency = 5
-    separator_height = 2
-    padding = 12
-    horizontal_padding = 12
-    text_icon_padding = 10
-    frame_width = 2
+    separator_height = 1
+    padding = 8
+    horizontal_padding = 8
+    text_icon_padding = 8
+    frame_width = 1
     frame_color = "#cba6f7"
     separator_color = frame
     sort = yes
-    font = JetBrainsMono Nerd Font 10
+    font = JetBrainsMono Nerd Font 8.5
     line_height = 0
     markup = full
     format = "<b>%s</b>\n%b"
@@ -33,21 +33,21 @@
     icon_theme = Papirus-Dark
     enable_recursive_icon_lookup = true
     icon_position = left
-    min_icon_size = 32
-    max_icon_size = 48
-    corner_radius = 10
+    min_icon_size = 18
+    max_icon_size = 22
+    corner_radius = 8
 
 [urgency_low]
     background = "#1e1e2e"
     foreground = "#cdd6f4"
     frame_color = "#89b4fa"
-    timeout = 4
+    timeout = 3
 
 [urgency_normal]
     background = "#1e1e2e"
     foreground = "#cdd6f4"
     frame_color = "#cba6f7"
-    timeout = 6
+    timeout = 4
 
 [urgency_critical]
     background = "#1e1e2e"

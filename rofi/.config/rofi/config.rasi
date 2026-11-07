@@ -7,11 +7,11 @@ configuration {
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
-    display-drun: " 󰀻 Aplikasi ";
-    display-run: " 󰆍 Perintah ";
-    display-window: " 󰖯 Jendela ";
+    display-drun: " 󰀻 App ";
+    display-run: " 󰆍 Run ";
+    display-window: " 󰖯 Win ";
     sidebar-mode: true;
-    font: "JetBrainsMono Nerd Font 12";
+    font: "JetBrainsMono Nerd Font 9.5";
 }
 
 @theme "/dev/null"
@@ -26,7 +26,7 @@ configuration {
     fg-col2: #f38ba8;
     grey: #7f849c;
 
-    width: 660;
+    width: 440;
     background-color: @bg-col;
 }
 
@@ -36,11 +36,11 @@ element-text, element-icon , mode-switcher {
 }
 
 window {
-    height: 460px;
+    height: 310px;
     border: 2px;
     border-color: @border-col;
     background-color: @bg-col;
-    border-radius: 14px;
+    border-radius: 10px;
 }
 
 mainbox {
@@ -50,16 +50,16 @@ mainbox {
 inputbar {
     children: [prompt,entry];
     background-color: @bg-col;
-    border-radius: 8px;
-    padding: 6px;
+    border-radius: 6px;
+    padding: 2px;
 }
 
 prompt {
     background-color: @mauve;
-    padding: 8px 14px;
+    padding: 5px 10px;
     text-color: #11111b;
-    border-radius: 8px;
-    margin: 14px 0px 0px 14px;
+    border-radius: 6px;
+    margin: 8px 0px 0px 10px;
 }
 
 textbox-prompt-colon {
@@ -68,35 +68,35 @@ textbox-prompt-colon {
 }
 
 entry {
-    padding: 8px 12px;
-    margin: 14px 14px 0px 10px;
+    padding: 5px 8px;
+    margin: 8px 10px 0px 6px;
     text-color: @fg-col;
     background-color: @bg-col-light;
-    border-radius: 8px;
-    placeholder: "󰍉  Ketik nama aplikasi untuk mencari...";
+    border-radius: 6px;
+    placeholder: "󰍉 Cari aplikasi...";
     placeholder-color: @grey;
 }
 
 listview {
     border: 0px 0px 0px;
-    padding: 10px 0px 0px;
-    margin: 8px 14px 10px 14px;
+    padding: 6px 0px 0px;
+    margin: 4px 10px 6px 10px;
     columns: 2;
-    lines: 7;
+    lines: 6;
     background-color: @bg-col;
 }
 
 element {
-    padding: 10px 12px;
-    margin: 3px;
+    padding: 5px 8px;
+    margin: 2px;
     background-color: @bg-col;
     text-color: @fg-col;
-    border-radius: 10px;
+    border-radius: 6px;
 }
 
 element-icon {
-    size: 32px;
-    margin: 0px 12px 0px 0px;
+    size: 18px;
+    margin: 0px 8px 0px 0px;
 }
 
 element selected {
@@ -109,7 +109,7 @@ mode-switcher {
 }
 
 button {
-    padding: 10px;
+    padding: 6px;
     background-color: @bg-col-light;
     text-color: @grey;
     vertical-align: 0.5;

@@ -16,7 +16,7 @@ set $keybinds ~/.config/rofi/keybindings.sh
 set $filemanager thunar
 set $editor code
 
-font pango:JetBrainsMono Nerd Font 10.5
+font pango:JetBrainsMono Nerd Font 8.5
 
 # -----------------------------------------------------------------------------
 # Catppuccin Mocha Colors
@@ -58,10 +58,10 @@ client.background        $base
 # -----------------------------------------------------------------------------
 # Appearance, Gaps & Custom Wallpaper
 # -----------------------------------------------------------------------------
-default_border pixel 2
-default_floating_border pixel 2
-gaps inner 6
-gaps outer 2
+default_border pixel 1
+default_floating_border pixel 1
+gaps inner 4
+gaps outer 1
 smart_borders on
 
 output * bg ~/.config/sway/wallpaper.png fill

@@ -1,11 +1,11 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 34,
-  "spacing": 6,
-  "margin-top": 6,
-  "margin-left": 8,
-  "margin-right": 8,
+  "height": 24,
+  "spacing": 4,
+  "margin-top": 3,
+  "margin-left": 5,
+  "margin-right": 5,
 
   "modules-left": [
     "custom/launcher",
@@ -30,7 +30,7 @@
   ],
 
   "custom/launcher": {
-    "format": "󰣇  Cari",
+    "format": "󰣇 Cari",
     "tooltip-format": "Cari Aplikasi (Super + Space)",
     "on-click": "rofi -show drun -show-icons"
   },
@@ -43,7 +43,7 @@
 
   "custom/keybinds": {
     "format": "󰌌 Keys",
-    "tooltip-format": "Cari Shortcut & Keybindings (Super + ? atau Super + K)",
+    "tooltip-format": "Cari Shortcut & Keybindings (Super + / atau Super + ?)",
     "on-click": "~/.config/rofi/keybindings.sh"
   },
 
@@ -66,7 +66,7 @@
 
   "sway/window": {
     "format": "{title}",
-    "max-length": 40,
+    "max-length": 28,
     "rewrite": {
       "(.*) — Mozilla Firefox": "󰈹 $1",
       "(.*) - Visual Studio Code": "󰨞 $1",
@@ -136,7 +136,7 @@
     "format-wifi": "󰤨 {essid}",
     "format-ethernet": "󰈀 {ipaddr}",
     "format-linked": "󰈀 {ifname}",
-    "format-disconnected": "󰤭 Offline",
+    "format-disconnected": "󰤭 Off",
     "tooltip-format": "{ifname}: {ipaddr}/{cidr}\nSinyal: {signalStrength}% ({frequency}MHz)",
     "on-click": "wezterm start -- nmtui"
   },
@@ -156,8 +156,8 @@
   },
 
   "tray": {
-    "icon-size": 17,
-    "spacing": 8
+    "icon-size": 13,
+    "spacing": 5
   },
 
   "custom/power": {
