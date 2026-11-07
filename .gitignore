@@ -17,3 +17,4 @@ vscode/.config/*/languagepacks.json
 vscode/.config/*/machineid
 vscode/.config/*/storage.json
 *.bak
+XTerm*
