@@ -19,7 +19,7 @@ config.enable_kitty_graphics = true
 config.enable_wayland = true
 config.front_end = "OpenGL"
 
--- GUI Tab Bar Kompak di Atas dengan Tombol [+] Tambah Tab & [x] Tutup Tab
+-- GUI Tab Bar Kompak di Atas dengan Tombol [+] Hijau & [x] Merah + Varian Warna per Tab
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
@@ -34,33 +34,99 @@ config.window_frame = {
   inactive_titlebar_bg = "#11111b",
 }
 
+-- Warna Varian Tab Bar:
+-- * fg_color (#f38ba8 Merah Coral) otomatis memberi warna Merah pada ikon silang [x] di tiap tab!
+-- * new_tab (#a6e3a1 Hijau Emerald) memberi warna Hijau menyala pada tombol tambah [+]!
 config.colors = {
   tab_bar = {
     background = "#11111b",
     active_tab = {
-      bg_color = "#cba6f7",
-      fg_color = "#11111b",
+      bg_color = "#313244",
+      fg_color = "#f38ba8",
       intensity = "Bold",
     },
     inactive_tab = {
-      bg_color = "#1e1e2e",
-      fg_color = "#a6adc8",
+      bg_color = "#181825",
+      fg_color = "#f38ba8",
     },
     inactive_tab_hover = {
       bg_color = "#313244",
-      fg_color = "#cdd6f4",
+      fg_color = "#f38ba8",
     },
     new_tab = {
-      bg_color = "#313244",
-      fg_color = "#cba6f7",
+      bg_color = "#a6e3a1",
+      fg_color = "#11111b",
+      intensity = "Bold",
     },
     new_tab_hover = {
-      bg_color = "#cba6f7",
+      bg_color = "#94e2d5",
       fg_color = "#11111b",
       intensity = "Bold",
     },
   },
 }
+
+-- Palet Warna-Warni Catppuccin untuk Badge Tiap Tab Terminal
+local tab_accents = {
+  "#cba6f7", -- Tab 1: Mauve (Ungu)
+  "#89b4fa", -- Tab 2: Blue (Biru)
+  "#fab387", -- Tab 3: Peach (Oranye)
+  "#a6e3a1", -- Tab 4: Green (Hijau)
+  "#f5c2e7", -- Tab 5: Pink (Merah Muda)
+  "#f9e2af", -- Tab 6: Yellow (Kuning)
+  "#94e2d5", -- Tab 7: Teal (Toska)
+}
+
+local function get_proc_icon(title)
+  local t = string.lower(title or "")
+  if string.find(t, "nvim") or string.find(t, "vim") then
+    return " "
+  elseif string.find(t, "node") or string.find(t, "npm") or string.find(t, "bun") then
+    return "󰎙 "
+  elseif string.find(t, "python") then
+    return "󰌠 "
+  elseif string.find(t, "git") or string.find(t, "lazygit") then
+    return "󰊢 "
+  elseif string.find(t, "btop") or string.find(t, "htop") then
+    return "󰻠 "
+  else
+    return "󰆍 "
+  end
+end
+
+wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, hover, max_width)
+  local idx = (tab.tab_index % #tab_accents) + 1
+  local accent = tab_accents[idx]
+  local title = tab.active_pane.title or "zsh"
+  local icon = get_proc_icon(title)
+
+  if #title > 18 then
+    title = string.sub(title, 1, 17) .. "…"
+  end
+
+  if tab.is_active then
+    return {
+      { Background = { Color = accent } },
+      { Foreground = { Color = "#d20f39" } },
+      { Text = "" },
+      { Foreground = { Color = "#11111b" } },
+      { Attribute = { Intensity = "Bold" } },
+      { Text = " " .. tostring(tab.tab_index + 1) .. " " .. icon .. title .. " " },
+    }
+  else
+    local bg = hover and "#313244" or "#1e1e2e"
+    return {
+      { Background = { Color = bg } },
+      { Foreground = { Color = "#f38ba8" } },
+      { Text = " " },
+      { Foreground = { Color = accent } },
+      { Attribute = { Intensity = "Bold" } },
+      { Text = tostring(tab.tab_index + 1) .. " " .. icon },
+      { Foreground = { Color = "#cdd6f4" } },
+      { Text = title .. " " },
+    }
+  end
+end)
 
 -- Tampilan Window & Cursor Kompak
 config.window_background_opacity = 0.96

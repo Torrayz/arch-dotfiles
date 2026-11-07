@@ -10,6 +10,8 @@
   "modules-left": [
     "custom/hub",
     "sway/workspaces",
+    "custom/win_size",
+    "custom/quickclip",
     "custom/keybinds"
   ],
   "modules-center": [
@@ -53,6 +55,20 @@
       "title<.*btop.*>": "󰻠",
       "title<.*nvim.*>": ""
     }
+  },
+
+  "custom/win_size": {
+    "exec": "~/.config/polybar/scripts/win-layout.sh status",
+    "interval": 1,
+    "tooltip-format": "Klik Kiri: Ubah Ukuran Aplikasi Aktif (S/M/L/Full) | Klik Kanan: Menu Ukuran",
+    "on-click": "~/.config/polybar/scripts/win-layout.sh cycle",
+    "on-click-right": "~/.config/polybar/scripts/win-layout.sh menu"
+  },
+
+  "custom/quickclip": {
+    "format": "󰅌 ",
+    "tooltip-format": "Riwayat Clipboard Visual (Super+V)",
+    "on-click": "~/.config/polybar/scripts/torray-clip.py --popup"
   },
 
   "custom/keybinds": {

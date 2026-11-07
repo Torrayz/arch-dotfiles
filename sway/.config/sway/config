@@ -132,8 +132,10 @@ for_window [title="Torray Hub"] floating enable, border pixel 2
 bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
-# Clipboard History
-bindsym $mod+v exec cliphist list | rofi -dmenu -p "󰅌 Clipboard" | cliphist decode | wl-copy
+# Clipboard History (Windows 11 Style Visual Clipboard Manager)
+bindsym $mod+v exec ~/.config/polybar/scripts/torray-clip.py --popup
+bindsym $mod+z exec ~/.config/polybar/scripts/win-layout.sh cycle
+for_window [title="Torray Clipboard"] floating enable, sticky enable, border pixel 2
 
 # Quick Translate Selection (from Torrayz/dotfilesku: Super+G -> ID, Super+Shift+G -> EN)
 bindsym $mod+g exec sh -c 'notify-send -u critical "Terjemahan Indo:" "$(trans -b -t id "$(wl-paste -p)")"'

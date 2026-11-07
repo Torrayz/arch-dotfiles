@@ -67,6 +67,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 1e1e2e --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
+exec_always --no-startup-id ~/.config/polybar/scripts/torray-clip.py --daemon
 exec_always --no-startup-id feh --bg-fill ~/.config/sway/wallpaper.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
@@ -98,7 +99,10 @@ bindsym Ctrl+Mod1+Delete exec --no-startup-id wezterm start -- btop
 bindsym $mod+n exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --dash
 bindsym $mod+p exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --music
 bindsym $mod+Shift+w exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --wall
-for_window [title="Torray Hub"] floating enable, border pixel 2
+bindsym $mod+v exec --no-startup-id ~/.config/polybar/scripts/torray-clip.py --popup
+bindsym $mod+z exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh cycle
+for_window [title="Torray Hub"] floating enable, sticky enable, border pixel 2
+for_window [title="Torray Clipboard"] floating enable, sticky enable, border pixel 2
 
 # Kill Active Window
 bindsym $mod+q kill

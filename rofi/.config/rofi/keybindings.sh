@@ -13,7 +13,8 @@ entries=(
   "󰨞  Super + C                 │ Buka Code Editor (VS Code)"
   "󰉋  Super + E                 │ Buka File Manager (Thunar)"
   "󰈹  Super + B                 │ Buka Browser (Firefox)"
-  "󰅌  Super + V                 │ Riwayat Clipboard (Copy-Paste History)"
+  "󰅌  Super + V                 │ Buka Visual Clipboard History (Teks & Screenshot seperti Windows)"
+  "󰊓  Super + Z                 │ Ubah Ukuran Aplikasi Aktif: S (Compact) -> M -> L -> Full"
   "󰻠  Super + M / Ctrl+Alt+Del  │ Buka System Monitor & Process List (btop)"
   "󰅖  Super + Q                 │ Tutup Jendela / Aplikasi Aktif"
   "󰊓  Super + F                 │ Layar Penuh (Fullscreen Toggle)"
@@ -54,6 +55,12 @@ case "$chosen" in
     ;;
   *"Super + Shift + W"*)
     ~/.config/polybar/scripts/torray-hub.py --wall &
+    ;;
+  *"Super + V"*)
+    ~/.config/polybar/scripts/torray-clip.py --popup &
+    ;;
+  *"Super + Z"*)
+    ~/.config/polybar/scripts/win-layout.sh cycle &
     ;;
   *"Super + Space"*)
     rofi -show drun -show-icons

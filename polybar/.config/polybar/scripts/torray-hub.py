@@ -273,6 +273,7 @@ class TorrayHub(Gtk.Window):
         self.set_resizable(True)
         self.set_decorated(False)
         self.set_keep_above(True)
+        self.stick()
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
 
         provider = Gtk.CssProvider()

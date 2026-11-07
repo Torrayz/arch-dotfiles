@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Smart Window Size & Floating Controller (i3 & Sway)
-# Controls active application size presets, floating-on-top, and sticky PiP
+# Smart Window Size & Floating Controller (S / M / L / PiP / Tiling)
+# Applies the S/M/L concept to ANY active application via Navbar or Super+Z!
 # =============================================================================
+
+STATE_FILE="/tmp/bar_win_size_mode"
 
 run_wm() {
     if [ -n "${WAYLAND_DISPLAY:-}" ]; then
@@ -13,8 +15,21 @@ run_wm() {
 }
 
 case "${1:-}" in
+    status)
+        mode=$(cat "$STATE_FILE" 2>/dev/null || echo "Full")
+        echo "󰊓 ${mode}"
+        ;;
+    cycle)
+        cur=$(cat "$STATE_FILE" 2>/dev/null || echo "Full")
+        case "$cur" in
+            Full) "$0" small ;;
+            S)    "$0" medium ;;
+            M)    "$0" large ;;
+            L)    "$0" tile ;;
+            *)    "$0" small ;;
+        esac
+        ;;
     toggle-float)
-        # Check if currently floating in i3/sway
         is_float=$(i3-msg -t get_tree 2>/dev/null | python3 -c '
 import sys, json
 def find_focused(n):
@@ -26,32 +41,35 @@ def find_focused(n):
 find_focused(json.load(sys.stdin))
 ' 2>/dev/null)
         if [[ "$is_float" == *"on"* ]]; then
-            run_wm "sticky disable, floating disable"
-            notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰖲 Mode Tiling" "Aplikasi kembali ke susunan otomatis"
+            "$0" tile
         else
-            run_wm "floating enable, resize set 900 540, move position center"
-            notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰖲 Mengambang di Atas" "Ukuran: 900x540 (Super+Ctrl+Shift+Panah untuk ubah ukuran)"
+            "$0" medium
         fi
         ;;
     small)
-        run_wm "sticky disable, floating enable, resize set 560 360, move position center"
-        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰖲 Mengambang Compact" "Ukuran aplikasi: 560x360 (Tengah)"
+        echo "S" > "$STATE_FILE"
+        run_wm "sticky disable, floating enable, resize set 580 370, move position center"
+        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰊓 Ukuran Aplikasi: S (Compact)" "580x370 Mengambang di Tengah"
         ;;
     medium)
-        run_wm "sticky disable, floating enable, resize set 880 530, move position center"
-        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰖲 Mengambang Sedang" "Ukuran aplikasi: 880x530 (Tengah)"
+        echo "M" > "$STATE_FILE"
+        run_wm "sticky disable, floating enable, resize set 900 540, move position center"
+        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰊓 Ukuran Aplikasi: M (Sedang)" "900x540 Mengambang di Tengah"
         ;;
     large)
-        run_wm "sticky disable, floating enable, resize set 1200 670, move position center"
-        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰖲 Mengambang Besar" "Ukuran aplikasi: 1200x670 (Tengah)"
+        echo "L" > "$STATE_FILE"
+        run_wm "sticky disable, floating enable, resize set 1220 680, move position center"
+        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰊓 Ukuran Aplikasi: L (Besar)" "1220x680 Mengambang di Tengah"
         ;;
     pip)
+        echo "PiP" > "$STATE_FILE"
         run_wm "floating enable, sticky enable, resize set 460 280, move position 890 470"
-        notify-send -h string:x-canonical-private-synchronous:osd -t 1500 "󰹙 Selalu di Atas (PiP)" "Mengambang di pojok kanan bawah di semua workspace"
+        notify-send -h string:x-canonical-private-synchronous:osd -t 1500 "󰹙 Mode PiP (Selalu di Atas)" "Mengambang di pojok kanan bawah di semua workspace"
         ;;
     tile)
+        echo "Full" > "$STATE_FILE"
         run_wm "sticky disable, floating disable"
-        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰤼 Mode Tiling" "Aplikasi diratakan kembali"
+        notify-send -h string:x-canonical-private-synchronous:osd -t 1200 "󰊓 Ukuran Aplikasi: Full (Tiling)" "Susunan rapi penuh otomatis"
         ;;
     grow-both)
         run_wm "resize grow width 60 px or 6 ppt, resize grow height 40 px or 6 ppt"
@@ -61,19 +79,19 @@ find_focused(json.load(sys.stdin))
         ;;
     menu)
         options=(
-            "󰖲  Mengambang Sedang (880x530 di Tengah)         [Super+Shift+Space]"
-            "󰊓  Mengambang Besar (1200x670 Hampir Penuh)       [Super+Alt+3]"
-            "󰘕  Mengambang Compact / Kecil (560x360)           [Super+Alt+1]"
-            "󰹙  Selalu di Atas / PiP Pojok Kanan Bawah         [Super+Alt+4]"
-            "󰤼  Kembalikan ke Tiling Otomatis (Rapi Penuh)     [Super+Alt+0]"
+            "󰊓  Ukuran S — Compact Mengambang (580x370)       [Super+Alt+1]"
+            "󰊓  Ukuran M — Sedang Mengambang (900x540)        [Super+Alt+2]"
+            "󰊓  Ukuran L — Besar Mengambang (1220x680)        [Super+Alt+3]"
+            "󰹙  Mode PiP — Selalu di Atas Pojok Kanan Bawah   [Super+Alt+4]"
+            "󰤼  Ukuran Full — Kembali ke Tiling Rapi Penuh    [Super+Alt+0]"
         )
-        chosen=$(printf '%s\n' "${options[@]}" | rofi -dmenu -i -p "󰖲 Ukuran & Mode Jendela" -theme ~/.config/rofi/keybinds.rasi)
+        chosen=$(printf '%s\n' "${options[@]}" | rofi -dmenu -i -p "󰊓 Ukuran Aplikasi (S/M/L)" -theme ~/.config/rofi/keybinds.rasi)
         case "$chosen" in
-            *"Mengambang Sedang"*) "$0" medium ;;
-            *"Mengambang Besar"*)  "$0" large ;;
-            *"Mengambang Compact"*) "$0" small ;;
-            *"Selalu di Atas"*)    "$0" pip ;;
-            *"Tiling Otomatis"*)   "$0" tile ;;
+            *"Ukuran S"*)    "$0" small ;;
+            *"Ukuran M"*)    "$0" medium ;;
+            *"Ukuran L"*)    "$0" large ;;
+            *"Mode PiP"*)    "$0" pip ;;
+            *"Ukuran Full"*) "$0" tile ;;
         esac
         ;;
 esac
