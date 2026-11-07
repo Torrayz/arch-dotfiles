@@ -1,10 +1,10 @@
 # =============================================================================
-# Zsh Configuration — Lightweight, Fast, Programming Ready
+# Zsh Configuration — Torray Custom Arch Setup (Catppuccin Mocha)
 # =============================================================================
 
 export EDITOR="nvim"
 export VISUAL="code"
-export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$PATH"
 
 # History Settings
 HISTFILE="$HOME/.zsh_history"
@@ -32,6 +32,8 @@ bindkey '^[[B' down-line-or-search
 bindkey '^[[3~' delete-char
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
 
 # Catppuccin Mocha FZF Theme
 export FZF_DEFAULT_OPTS=" \
@@ -39,18 +41,27 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a \
---height 45% --layout=reverse --border=rounded"
+--height 50% --layout=reverse --border=rounded"
 
-# Modern CLI Aliases
-alias ls='eza --icons --group-directories-first'
-alias ll='eza -la --icons --group-directories-first --git'
-alias lt='eza --tree --level=2 --icons'
+# Aliases (Synced with Torrayz/dotfilesku + Developer Workflow)
+alias c='clear'
+alias cls='clear'
+alias nf='fastfetch'
+alias pf='fastfetch'
+alias ff='fastfetch'
+alias ls='eza -a --icons=always --group-directories-first'
+alias ll='eza -al --icons=always --group-directories-first --git'
+alias lt='eza -a --tree --level=2 --icons=always'
 alias cat='bat --style=auto'
 alias v='nvim'
-alias c='code .'
+alias vim='nvim'
+alias vs='code .'
 alias lg='lazygit'
 alias top='btop'
-alias ff='fastfetch'
+alias wifi='nmtui'
+alias keys='~/.config/rofi/keybindings.sh'
+alias shutdown='systemctl poweroff'
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
 # Git Shortcuts
 alias g='git'
@@ -72,10 +83,21 @@ command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
-# Zsh Plugins
+# Zsh Plugins (Autosuggestions + Syntax Highlighting)
 if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# Custom user overrides if ~/.zshrc_custom exists
+if [ -f "$HOME/.zshrc_custom" ]; then
+    source "$HOME/.zshrc_custom"
+fi
+
+# Auto-run Fastfetch with Custom Logo on Interactive Terminal Launch
+if [[ $- == *i* ]] && [[ $(tty) == *"pts"* ]] && [[ -z "$FASTFETCH_SHOWN" ]]; then
+    export FASTFETCH_SHOWN=1
+    fastfetch
 fi

@@ -1,0 +1,22 @@
+@import "config.rasi"
+
+* {
+    width: 820;
+}
+
+window {
+    height: 520px;
+}
+
+entry {
+    placeholder: "󰍉  Ketik fungsi atau tombol (contoh: terminal, screenshot, tab, float)...";
+}
+
+listview {
+    columns: 1;
+    lines: 11;
+}
+
+element {
+    padding: 8px 14px;
+}

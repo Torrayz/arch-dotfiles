@@ -19,7 +19,7 @@
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   border: none;
   border-radius: 0;
@@ -41,10 +41,26 @@ tooltip {
 #custom-launcher {
   background-color: @mauve;
   color: @crust;
-  font-size: 16px;
-  padding: 0 13px 0 10px;
+  font-weight: 700;
+  padding: 0 12px;
   border-radius: 10px;
-  margin-right: 2px;
+}
+
+#custom-terminal {
+  background-color: @surface0;
+  color: @green;
+  font-size: 15px;
+  padding: 0 11px;
+  border-radius: 10px;
+  border: 1px solid @surface1;
+}
+
+#custom-keybinds {
+  background-color: @surface0;
+  color: @peach;
+  padding: 0 11px;
+  border-radius: 10px;
+  border: 1px solid @surface1;
 }
 
 #workspaces {
@@ -55,7 +71,7 @@ tooltip {
 }
 
 #workspaces button {
-  padding: 0 8px;
+  padding: 0 9px;
   margin: 2px;
   border-radius: 7px;
   color: @subtext0;
@@ -72,7 +88,7 @@ tooltip {
 #workspaces button.active {
   background-color: @mauve;
   color: @crust;
-  min-width: 24px;
+  min-width: 26px;
 }
 
 #workspaces button.urgent {

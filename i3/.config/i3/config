@@ -1,5 +1,5 @@
 # =============================================================================
-# i3 Configuration — Catppuccin Mocha (Synced with Sway Keybindings)
+# i3 Configuration — Catppuccin Mocha (Synced with Torrayz/dotfilesku)
 # =============================================================================
 
 set $mod Mod4
@@ -8,12 +8,15 @@ set $down j
 set $up k
 set $right l
 
-set $term alacritty
-set $menu rofi -show drun
+# Primary Terminal: WezTerm (GUI Tabs [+] & [x], Custom PNG Logo support)
+set $term wezterm start
+set $term_alt kitty
+set $menu rofi -show drun -show-icons
+set $keybinds ~/.config/rofi/keybindings.sh
 set $filemanager thunar
 set $editor code
 
-font pango:JetBrainsMono Nerd Font 10
+font pango:JetBrainsMono Nerd Font 10.5
 
 # Catppuccin Mocha Colors
 set $rosewater #f5e0dc
@@ -43,7 +46,6 @@ set $base      #1e1e2e
 set $mantle    #181825
 set $crust     #11111b
 
-# target                 title     bg    text   indicator  border
 client.focused           $mauve    $base $text  $rosewater $mauve
 client.focused_inactive  $surface1 $base $text  $rosewater $surface1
 client.unfocused         $surface0 $base $text  $rosewater $surface0
@@ -65,30 +67,61 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 1e1e2e --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
-exec_always --no-startup-id xsetroot -solid "#181825"
+exec_always --no-startup-id feh --bg-fill ~/.config/sway/wallpaper.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-# Keybindings — Apps & Utilities
-bindsym $mod+Return exec $term
-bindsym $mod+d exec --no-startup-id $menu
-bindsym $mod+c exec $editor
-bindsym $mod+e exec $filemanager
-bindsym $mod+b exec firefox
+# -----------------------------------------------------------------------------
+# Keybindings — Synced with Torrayz/dotfilesku
+# -----------------------------------------------------------------------------
 
+# Terminal (Super + T & Super + Enter)
+bindsym $mod+t exec --no-startup-id $term
+bindsym $mod+Return exec --no-startup-id $term
+bindsym $mod+Shift+Return exec --no-startup-id $term_alt
+
+# Spotlight App Search (Super + Space, Super + D, Super + Ctrl + Enter)
+bindsym $mod+space exec --no-startup-id $menu
+bindsym $mod+d exec --no-startup-id $menu
+bindsym $mod+Ctrl+Return exec --no-startup-id $menu
+
+# Search Keybindings Cheat-Sheet (Super + ?, Super + K, Super + Ctrl + K)
+bindsym $mod+Shift+slash exec --no-startup-id $keybinds
+bindsym $mod+k exec --no-startup-id $keybinds
+bindsym $mod+Ctrl+k exec --no-startup-id $keybinds
+
+# Core Apps
+bindsym $mod+c exec --no-startup-id $editor
+bindsym $mod+e exec --no-startup-id $filemanager
+bindsym $mod+b exec --no-startup-id firefox
+bindsym $mod+m exec --no-startup-id wezterm start -- btop
+bindsym Ctrl+Mod1+Delete exec --no-startup-id wezterm start -- btop
+
+# Kill Active Window
 bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
-# Screenshot (Flameshot on X11)
-bindsym Print exec --no-startup-id flameshot gui
+# Quick Translate Selection (Super+G -> ID, Super+Shift+G -> EN)
+bindsym $mod+g exec --no-startup-id sh -c 'notify-send -u critical "Terjemahan Indo:" "$(trans -b -t id "$(xclip -o -selection primary)")"'
+bindsym $mod+Shift+g exec --no-startup-id sh -c 'notify-send -u critical "To English:" "$(trans -b -t en "$(xclip -o -selection primary)")"'
+
+# Screenshots (F10, Print, Super+Shift+S, Super+Alt+S)
+bindsym F10 exec --no-startup-id flameshot gui
+bindsym $mod+F10 exec --no-startup-id flameshot gui
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui
+bindsym $mod+Mod1+s exec --no-startup-id flameshot gui
+bindsym Print exec --no-startup-id flameshot gui
 
 # Lock & Power Menu
 bindsym $mod+Escape exec --no-startup-id i3lock -c 1e1e2e
+bindsym $mod+Mod1+l exec --no-startup-id i3lock -c 1e1e2e
+bindsym $mod+Ctrl+l exec --no-startup-id i3lock -c 1e1e2e
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/powermenu.sh
+bindsym $mod+Ctrl+q exec --no-startup-id ~/.config/rofi/powermenu.sh
 
 # Reload / Restart i3
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+bindsym $mod+Ctrl+r restart
 
 # Hardware Function Keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
@@ -98,7 +131,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pamixer --default-source -t
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
-# Window Navigation
+# Window Navigation, Resize & Layout
 floating_modifier $mod
 tiling_drag modifier titlebar
 
@@ -120,14 +153,20 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-bindsym $mod+semicolon split h
-bindsym $mod+v split v
+# Direct Resize with Super + Ctrl + Arrow
+bindsym $mod+Ctrl+Right resize grow width 40 px or 5 ppt
+bindsym $mod+Ctrl+Left resize shrink width 40 px or 5 ppt
+bindsym $mod+Ctrl+Up resize shrink height 40 px or 5 ppt
+bindsym $mod+Ctrl+Down resize grow height 40 px or 5 ppt
+
 bindsym $mod+f fullscreen toggle
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+t layout toggle split
+bindsym $mod+Shift+t floating toggle
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Mod1+space focus mode_toggle
+bindsym $mod+w layout toggle tabbed split
+bindsym $mod+r layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+semicolon split h
 bindsym $mod+a focus parent
 
 # Workspaces
@@ -152,6 +191,8 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
 
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
@@ -163,23 +204,6 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
-
-mode "resize" {
-    bindsym $left resize shrink width 10 px or 10 ppt
-    bindsym $down resize grow height 10 px or 10 ppt
-    bindsym $up resize shrink height 10 px or 10 ppt
-    bindsym $right resize grow width 10 px or 10 ppt
-
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
-}
-bindsym $mod+r mode "resize"
 
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Blueman-manager"] floating enable

@@ -4,60 +4,94 @@ palette = "catppuccin_mocha"
 add_newline = true
 
 format = """
+[╭─](surface2)\
+[](mauve)\
+$os\
+$username\
+[](bg:surface0 fg:mauve)\
 $directory\
+[](bg:surface1 fg:surface0)\
 $git_branch\
 $git_status\
+[](fg:surface1)\
+$fill\
 $nodejs\
 $python\
 $rust\
 $golang\
 $cmd_duration\
+$time\
 $line_break\
-$character"""
+[╰─](surface2)$character"""
 
-[character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold mauve)"
+[os]
+disabled = false
+style = "bg:mauve fg:crust bold"
+
+[os.symbols]
+Arch = "󰣇 "
+Linux = " "
+
+[username]
+show_always = true
+style_user = "bg:mauve fg:crust bold"
+style_root = "bg:red fg:crust bold"
+format = '[$user ]($style)'
 
 [directory]
-style = "bold lavender"
-truncation_length = 4
-truncate_to_repo = true
+style = "bg:surface0 fg:text bold"
+format = "[ 󰉋 $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
 
 [git_branch]
-symbol = " "
-style = "bold mauve"
-format = "on [$symbol$branch]($style) "
+symbol = ""
+style = "bg:surface1 fg:lavender bold"
+format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "bold peach"
-format = '([$all_status$ahead_behind]($style) )'
+style = "bg:surface1 fg:peach bold"
+format = '[$all_status$ahead_behind ]($style)'
+
+[fill]
+symbol = "·"
+style = "fg:surface0"
 
 [nodejs]
 symbol = " "
-style = "bold green"
-format = "via [$symbol($version )]($style)"
+style = "bg:green fg:crust bold"
+format = ' [](fg:green)[$symbol$version]($style)[](fg:green)'
 
 [python]
 symbol = " "
-style = "bold yellow"
-format = "via [$symbol($version )]($style)"
+style = "bg:yellow fg:crust bold"
+format = ' [](fg:yellow)[$symbol$version]($style)[](fg:yellow)'
 
 [rust]
 symbol = " "
-style = "bold peach"
-format = "via [$symbol($version )]($style)"
+style = "bg:peach fg:crust bold"
+format = ' [](fg:peach)[$symbol$version]($style)[](fg:peach)'
 
 [golang]
 symbol = " "
-style = "bold sapphire"
-format = "via [$symbol($version )]($style)"
+style = "bg:sapphire fg:crust bold"
+format = ' [](fg:sapphire)[$symbol$version]($style)[](fg:sapphire)'
 
 [cmd_duration]
-min_time = 1500
-style = "bold yellow"
-format = "took [$duration]($style) "
+min_time = 1000
+style = "bg:peach fg:crust bold"
+format = ' [](fg:peach)[󱦟 $duration]($style)[](fg:peach)'
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "bg:surface0 fg:subtext1"
+format = ' [](fg:surface0)[󰥔 $time]($style)[](fg:surface0)'
+
+[character]
+success_symbol = "[❯](bold mauve)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
