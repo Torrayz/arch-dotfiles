@@ -1,0 +1,19 @@
+# Ignore runtime caches and logs inside stowed directories
+vscode/.config/*/logs/
+vscode/.config/*/Cached*/
+vscode/.config/*/User/workspaceStorage/
+vscode/.config/*/User/globalStorage/
+vscode/.config/*/User/History/
+vscode/.config/*/Backups/
+vscode/.config/*/blob_storage/
+vscode/.config/*/Code Cache/
+vscode/.config/*/GPUCache/
+vscode/.config/*/Dawn*/
+vscode/.config/*/Local Storage/
+vscode/.config/*/Session Storage/
+vscode/.config/*/Network/
+vscode/.config/*/Preferences
+vscode/.config/*/languagepacks.json
+vscode/.config/*/machineid
+vscode/.config/*/storage.json
+*.bak
