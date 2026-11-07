@@ -214,8 +214,9 @@ bindsym $mod+Ctrl+Down resize grow height 50px
 bindsym $mod+equal exec ~/.config/polybar/scripts/win-layout.sh grow-both
 bindsym $mod+minus exec ~/.config/polybar/scripts/win-layout.sh shrink-both
 
-# Fullscreen, Float on Top, Window Size Presets
-bindsym $mod+f fullscreen
+# Fullscreen (Below Navbar vs True Max), Float on Top, Window Size Presets
+bindsym $mod+f exec ~/.config/polybar/scripts/win-layout.sh toggle-max
+bindsym $mod+Shift+f exec ~/.config/polybar/scripts/win-layout.sh true-fullscreen
 bindsym $mod+Shift+t exec ~/.config/polybar/scripts/win-layout.sh toggle-float
 bindsym $mod+Shift+space exec ~/.config/polybar/scripts/win-layout.sh toggle-float
 bindsym $mod+Ctrl+space exec ~/.config/polybar/scripts/win-layout.sh menu

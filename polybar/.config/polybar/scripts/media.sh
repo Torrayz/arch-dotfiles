@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Live Navbar Music & Animated Visualizer Pill (MPRIS / playerctl + Torray Hub)
+# - Only appears in the center navbar when music is actively Playing!
+# - Left-clicking opens Torray Hub (Music Tab) centered below the navbar!
 # =============================================================================
 
 FRAME_FILE="/tmp/bar_media_frame"
 
 case "${1:-}" in
+    --hub)
+        ~/.config/polybar/scripts/torray-hub.py --music &
+        exit 0
+        ;;
     --play-pause)
-        status=$(playerctl status 2>/dev/null || echo "")
-        if [ -n "$status" ]; then
-            playerctl play-pause 2>/dev/null
-        else
-            ~/.config/polybar/scripts/torray-hub.py --music &
-        fi
+        playerctl play-pause 2>/dev/null || true
         exit 0
         ;;
     --next)
@@ -23,14 +24,11 @@ case "${1:-}" in
         playerctl previous 2>/dev/null || true
         exit 0
         ;;
-    --hub)
-        ~/.config/polybar/scripts/torray-hub.py --music &
-        exit 0
-        ;;
 esac
 
 status=$(playerctl status 2>/dev/null || echo "")
 
+# Only display the moving music equalizer when music is actively Playing!
 if [ "$status" = "Playing" ]; then
     frames=("▂▄▆█" "▄▆█▃" "▆█▄▂" "▃▇▄" "▅▃▆█" "▃▆▄▂")
     idx=0
@@ -40,17 +38,10 @@ if [ "$status" = "Playing" ]; then
     eq="${frames[$idx]}"
 
     title=$(playerctl metadata xesam:title 2>/dev/null || echo "Playing")
-    # Keep title compact so it never collides on 1366x768
-    if [ "${#title}" -gt 18 ]; then
-        title="${title:0:17}…"
+    if [ "${#title}" -gt 16 ]; then
+        title="${title:0:15}…"
     fi
     echo "󰎆 ${eq} ${title}"
-elif [ "$status" = "Paused" ]; then
-    title=$(playerctl metadata xesam:title 2>/dev/null || echo "Paused")
-    if [ "${#title}" -gt 14 ]; then
-        title="${title:0:13}…"
-    fi
-    echo "󰏤 ${title}"
 else
-    echo "󰎆 Musik"
+    echo ""
 fi

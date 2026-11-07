@@ -184,7 +184,10 @@ bindsym $mod+equal exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh 
 bindsym $mod+minus exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh shrink-both
 
 # Floating on Top & Automatic Window Size Presets
-bindsym $mod+f fullscreen toggle
+# Super + F: Full di bawah Navbar (Navbar & Tab Browser tetap aman!)
+# Super + Shift + F: Full Layar Versi Maks (Sembunyikan Navbar)
+bindsym $mod+f exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh toggle-max
+bindsym $mod+Shift+f exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh true-fullscreen
 bindsym $mod+Shift+t exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh toggle-float
 bindsym $mod+Shift+space exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh toggle-float
 bindsym $mod+Ctrl+space exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh menu

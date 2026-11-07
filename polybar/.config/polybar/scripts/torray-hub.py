@@ -253,8 +253,8 @@ def apply_wallpaper(path):
 
 class TorrayHub(Gtk.Window):
     SIZES = [
-        (345, 295, "S"),
-        (480, 410, "M"),
+        (385, 300, "S"),
+        (490, 410, "M"),
         (620, 510, "L"),
     ]
 
@@ -275,6 +275,7 @@ class TorrayHub(Gtk.Window):
         self.set_keep_above(True)
         self.stick()
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+        self.set_position(Gtk.WindowPosition.CENTER)
 
         provider = Gtk.CssProvider()
         provider.load_from_data(CSS)
@@ -289,6 +290,7 @@ class TorrayHub(Gtk.Window):
         self.vis_theme = 0  # 0: Cyber, 1: Mauve, 2: Matrix
         self.bars = [0.15] * 28
         self.phase = 0.0
+        self.wall_loaded = False
 
         root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         self.add(root_box)
@@ -328,8 +330,8 @@ class TorrayHub(Gtk.Window):
 
         # Stack
         self.stack = Gtk.Stack()
-        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
-        self.stack.set_transition_duration(150)
+        self.stack.set_transition_type(Gtk.StackTransitionType.NONE)
+        self.stack.set_transition_duration(140)
         root_box.pack_start(self.stack, True, True, 0)
 
         self.build_dash_tab()
@@ -341,7 +343,7 @@ class TorrayHub(Gtk.Window):
 
         GLib.timeout_add(60, self.animate_visualizer)
         GLib.timeout_add(1200, self.refresh_status)
-        self.refresh_status()
+        GLib.idle_add(self.refresh_status)
 
     def switch_tab(self, tab_id):
         if tab_id not in self.tab_btns:
@@ -354,6 +356,9 @@ class TorrayHub(Gtk.Window):
             ctx.add_class("tab-btn-active" if tid == tab_id else "tab-btn")
         if tab_id == "dev":
             self.refresh_ports()
+        elif tab_id == "wall" and not self.wall_loaded:
+            self.wall_loaded = True
+            self.populate_wallpapers()
 
     def cycle_hub_size(self, _btn):
         self.size_idx = (self.size_idx + 1) % len(self.SIZES)
@@ -366,7 +371,7 @@ class TorrayHub(Gtk.Window):
         self.size_btn.set_label(f"󰊓 {tag}")
         self.resize(w, h)
         if self.size_idx == 0:
-            self.move(8, 34)
+            self.move((1366 - w) // 2, 36)
         else:
             self.move((1366 - w) // 2, (768 - h) // 2)
 
@@ -598,7 +603,7 @@ class TorrayHub(Gtk.Window):
         win_lbl = Gtk.Label(label="Mode App:")
         win_lbl.get_style_context().add_class("song-artist")
         win_bar.pack_start(win_lbl, False, False, 0)
-        for w_label, w_arg in [("Mini", "small"), ("Sedang", "medium"), ("Besar", "large"), ("PiP", "pip"), ("Tiling", "tile")]:
+        for w_label, w_arg in [("S", "small"), ("M", "medium"), ("L", "large"), ("PiP", "pip"), ("Full", "toggle-max")]:
             wb = Gtk.Button(label=w_label)
             wb.get_style_context().add_class("action-btn")
             wb.connect("clicked", lambda _w, a=w_arg: self.launch_and_close(f"~/.config/polybar/scripts/win-layout.sh {a}"))
@@ -614,7 +619,6 @@ class TorrayHub(Gtk.Window):
         scroll.add(self.wall_grid)
         box.pack_start(scroll, True, True, 0)
 
-        self.populate_wallpapers()
         self.stack.add_named(box, "wall")
 
     def populate_wallpapers(self):
@@ -965,13 +969,14 @@ def main():
         f.write(str(os.getpid()))
 
     win = TorrayHub(start_tab=tab)
-    win.show_all()
+    w, h, _ = win.SIZES[win.size_idx]
     if win.size_idx == 0:
-        win.move(8, 34)
+        win.move((1366 - w) // 2, 36)
     else:
-        w, h, _ = win.SIZES[win.size_idx]
         win.move((1366 - w) // 2, (768 - h) // 2)
+    win.show_all()
     win.switch_tab(tab)
+    win.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
     Gtk.main()
 
 

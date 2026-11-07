@@ -8,13 +8,13 @@
   "margin-right": 6,
 
   "modules-left": [
-    "custom/hub",
     "sway/workspaces",
     "custom/win_size",
     "custom/quickclip",
     "custom/keybinds"
   ],
   "modules-center": [
+    "custom/hub",
     "custom/media",
     "custom/clock_toggle"
   ],
@@ -87,9 +87,9 @@
   "custom/media": {
     "exec": "~/.config/polybar/scripts/media.sh",
     "interval": 1,
-    "tooltip-format": "Klik Kiri: Play/Pause | Klik Kanan: Buka Music Visualizer | Scroll: Next/Prev",
-    "on-click": "~/.config/polybar/scripts/media.sh --play-pause",
-    "on-click-right": "~/.config/polybar/scripts/media.sh --hub",
+    "tooltip-format": "Klik Kiri: Buka Torray Hub Musik | Klik Kanan: Play/Pause | Scroll: Next/Prev",
+    "on-click": "~/.config/polybar/scripts/media.sh --hub",
+    "on-click-right": "~/.config/polybar/scripts/media.sh --play-pause",
     "on-scroll-up": "~/.config/polybar/scripts/media.sh --next",
     "on-scroll-down": "~/.config/polybar/scripts/media.sh --prev"
   },
