@@ -6,7 +6,7 @@
 entries=(
   "󰍉  Super + Space             │ Cari & Buka Aplikasi (Spotlight Search)"
   "󰆍  Super + T / Super + Enter │ Buka Terminal WezTerm (Ada Tombol [+] & [x] Tab)"
-  "󰌌  Super + ? / Super + K     │ Buka Pencarian Keybindings Ini"
+  "󰌌  Super + / atau Super + ?  │ Buka Pencarian Keybindings Ini (atau Super+Ctrl+K)"
   "󰨞  Super + C                 │ Buka Code Editor (VS Code)"
   "󰉋  Super + E                 │ Buka File Manager (Thunar)"
   "󰈹  Super + B                 │ Buka Browser (Firefox)"

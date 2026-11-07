@@ -112,9 +112,9 @@ bindsym $mod+space exec $menu
 bindsym $mod+d exec $menu
 bindsym $mod+Ctrl+Return exec $menu
 
-# Search Keybindings Cheat-Sheet (Super + ?, Super + K, Super + Ctrl + K)
+# Search Keybindings Cheat-Sheet (Super + /, Super + ?, Super + Ctrl + K)
+bindsym $mod+slash exec $keybinds
 bindsym $mod+Shift+slash exec $keybinds
-bindsym $mod+k exec $keybinds
 bindsym $mod+Ctrl+k exec $keybinds
 
 # Core Apps
