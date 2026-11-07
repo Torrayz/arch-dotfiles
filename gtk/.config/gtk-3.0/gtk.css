@@ -1,0 +1,99 @@
+/* =============================================================================
+ * Custom Catppuccin Mocha GTK3 & Thunar Theme Override (Compact 1366x768)
+ * ============================================================================= */
+
+window.thunar,
+.thunar {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    font-size: 8.5pt;
+}
+
+.thunar toolbar,
+.thunar .top-bar,
+.thunar headerbar {
+    background-image: none;
+    background-color: #11111b;
+    color: #cdd6f4;
+    border-bottom: 1px solid #313244;
+    padding: 2px 6px;
+    min-height: 26px;
+}
+
+.thunar toolbar entry,
+.thunar .path-bar button {
+    background-image: none;
+    background-color: #181825;
+    color: #cdd6f4;
+    border: 1px solid #313244;
+    border-radius: 6px;
+    padding: 2px 8px;
+    min-height: 22px;
+}
+
+.thunar toolbar entry:focus,
+.thunar .path-bar button:checked {
+    border-color: #cba6f7;
+    color: #cba6f7;
+}
+
+.thunar .sidebar,
+.thunar .shortcuts-pane,
+.thunar scrolledwindow.sidebar treeview.view {
+    background-color: #181825;
+    color: #bac2de;
+    border-right: 1px solid #313244;
+    padding: 2px 4px;
+}
+
+.thunar .sidebar treeview.view:selected,
+.thunar .shortcuts-pane treeview.view:selected {
+    background-color: #cba6f7;
+    color: #11111b;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.thunar .standard-view,
+.thunar .standard-view .view,
+.thunar iconview,
+.thunar treeview.view {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+
+.thunar .standard-view .view:selected,
+.thunar iconview:selected,
+.thunar treeview.view:selected {
+    background-color: #313244;
+    color: #cba6f7;
+    border: 1px solid #cba6f7;
+    border-radius: 6px;
+}
+
+.thunar statusbar {
+    background-color: #11111b;
+    color: #a6adc8;
+    border-top: 1px solid #313244;
+    font-size: 8pt;
+    padding: 1px 6px;
+}
+
+menu,
+.context-menu {
+    background-color: #181825;
+    color: #cdd6f4;
+    border: 1px solid #cba6f7;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+menuitem {
+    border-radius: 5px;
+    padding: 4px 8px;
+}
+
+menuitem:hover {
+    background-color: #cba6f7;
+    color: #11111b;
+}
