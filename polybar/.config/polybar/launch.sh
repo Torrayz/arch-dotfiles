@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
+# =============================================================================
+# Bulletproof Polybar Launcher with Detached Watchdog (Immune to SIGPIPE/SIGHUP)
+# =============================================================================
 
-killall -q polybar
-while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
+pkill -f "polybar_watchdog_loop" 2>/dev/null || true
+killall -q polybar 2>/dev/null || true
+while pgrep -u "$UID" -x polybar >/dev/null; do sleep 0.1; done
 
-polybar main 2>&1 | tee -a /tmp/polybar.log & disown
+setsid -f bash -c '
+    # polybar_watchdog_loop
+    while true; do
+        polybar main >/tmp/polybar.log 2>&1
+        sleep 0.5
+    done
+' >/dev/null 2>&1 < /dev/null

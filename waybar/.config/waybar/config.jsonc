@@ -10,9 +10,6 @@
   "modules-left": [
     "custom/hub",
     "sway/workspaces",
-    "custom/quickterm",
-    "custom/quickcode",
-    "custom/quickwall",
     "custom/keybinds"
   ],
   "modules-center": [
@@ -21,6 +18,7 @@
   ],
   "modules-right": [
     "custom/sysinfo",
+    "custom/quickwall",
     "backlight",
     "pulseaudio",
     "custom/net_toggle",
@@ -39,26 +37,28 @@
   "sway/workspaces": {
     "disable-scroll": false,
     "all-outputs": true,
-    "format": "{name}",
-    "persistent-workspaces": {
-      "1": [],
-      "2": [],
-      "3": [],
-      "4": [],
-      "5": []
+    "format": "{name}  {windows}",
+    "format-window-separator": "  ",
+    "window-rewrite-default": "󰣆",
+    "window-rewrite": {
+      "class<org.wezfurlong.wezterm>": "󰆍",
+      "class<kitty>": "󰆍",
+      "class<UXTerm>": "󰆍",
+      "class<XTerm>": "󰆍",
+      "class<code-oss>": "󰨞",
+      "class<Code>": "󰨞",
+      "class<firefox>": "󰈹",
+      "class<Thunar>": "󰉋",
+      "class<mpv>": "󰎆",
+      "title<.*btop.*>": "󰻠",
+      "title<.*nvim.*>": ""
     }
   },
 
-  "custom/quickterm": {
-    "format": "󰆍 ",
-    "tooltip-format": "Buka Terminal WezTerm (Super+T)",
-    "on-click": "wezterm start"
-  },
-
-  "custom/quickcode": {
-    "format": "󰨞 ",
-    "tooltip-format": "Buka VS Code (Super+C)",
-    "on-click": "code"
+  "custom/keybinds": {
+    "format": "󰌌 ",
+    "tooltip-format": "Cari Shortcut & Keybindings (Super+/)",
+    "on-click": "~/.config/rofi/keybindings.sh"
   },
 
   "custom/quickwall": {
@@ -66,12 +66,6 @@
     "tooltip-format": "Klik Kiri: Buka Studio Wallpaper | Klik Kanan: Ganti Wallpaper Cepat",
     "on-click": "~/.config/polybar/scripts/torray-hub.py --wall",
     "on-click-right": "~/.config/polybar/scripts/wallpaper-cycle.sh"
-  },
-
-  "custom/keybinds": {
-    "format": "󰌌 ",
-    "tooltip-format": "Cari Shortcut & Keybindings (Super+/)",
-    "on-click": "~/.config/rofi/keybindings.sh"
   },
 
   "custom/media": {
