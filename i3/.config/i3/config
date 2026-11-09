@@ -63,7 +63,7 @@ smart_borders on
 # Autostart Services
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 1e1e2e --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lockscreen.sh
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
@@ -99,6 +99,7 @@ bindsym Ctrl+Mod1+Delete exec --no-startup-id wezterm start -- btop
 bindsym $mod+n exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --dash
 bindsym $mod+p exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --music
 bindsym $mod+Shift+w exec --no-startup-id ~/.config/polybar/scripts/torray-hub.py --wall
+bindsym $mod+i exec --no-startup-id ~/.config/rofi/control-center.sh
 bindsym $mod+v exec --no-startup-id ~/.config/polybar/scripts/torray-clip.py --popup
 bindsym $mod+z exec --no-startup-id ~/.config/polybar/scripts/win-layout.sh cycle
 for_window [title="Torray Hub"] floating enable, sticky enable, border pixel 2
@@ -120,9 +121,9 @@ bindsym $mod+Mod1+s exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id flameshot gui
 
 # Lock & Power Menu
-bindsym $mod+Escape exec --no-startup-id i3lock -c 1e1e2e
-bindsym $mod+Mod1+l exec --no-startup-id i3lock -c 1e1e2e
-bindsym $mod+Ctrl+l exec --no-startup-id i3lock -c 1e1e2e
+bindsym $mod+Escape exec --no-startup-id ~/.config/i3/lockscreen.sh
+bindsym $mod+Mod1+l exec --no-startup-id ~/.config/i3/lockscreen.sh
+bindsym $mod+Ctrl+l exec --no-startup-id ~/.config/i3/lockscreen.sh
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/powermenu.sh
 bindsym $mod+Ctrl+q exec --no-startup-id ~/.config/rofi/powermenu.sh
 

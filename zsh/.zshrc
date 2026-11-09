@@ -21,6 +21,7 @@ setopt AUTO_CD
 
 # Completion System
 autoload -Uz compinit
+zmodload zsh/complist
 compinit -C
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -85,7 +86,13 @@ command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
 # Zsh Plugins (Autosuggestions + Syntax Highlighting)
 if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#a6adc8'
+    ZSH_AUTOSUGGEST_USE_ASYNC=1
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=80
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    bindkey '^[[C' forward-char
+    bindkey '^F' autosuggest-accept
 fi
 if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

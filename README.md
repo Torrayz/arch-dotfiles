@@ -18,8 +18,12 @@
 
 ## 🖼️ Visual Showcase
 
-### 1. Colorful WezTerm GUI Tabs & Multi-Box Fastfetch Dashboard
-Custom **WezTerm** configuration with per-tab Catppuccin color badges, active process icons, an emerald **`[ + ]`** new-tab button, coral **`[ ✕ ]`** close buttons, and a **4-section color-coded Fastfetch dashboard** featuring hardware progress bars, live weather, audio level, and active media playback:
+### 1. Terminal & Fastfetch
+**WezTerm** has per-tab Catppuccin color badges and process icons. **Alacritty** opens Zsh with history-based inline suggestions: press **Right Arrow** at the end of the line or **Ctrl+F** to accept, **Tab** for completion, and **Ctrl+R** to search command history. Suggestions use local history, not an AI service, and are not executed until you press Enter.
+
+**Fastfetch** now shows a compact, two-section summary: user, OS, kernel, uptime, packages, desktop, terminal, shell, CPU, memory, and disk. The built-in Arch logo works in Alacritty as well as WezTerm. Weather remains in Torray Hub only.
+
+The illustration below shows the earlier, expanded Fastfetch layout, not the current compact configuration:
 
 <div align="center">
   <img src="assets/fastfetch-preview.png" alt="WezTerm & Custom Fastfetch Preview" width="94%" />
@@ -122,7 +126,7 @@ An event-driven GTK3 clipboard manager with RGBA visual transparency and Picom b
 ├── alacritty/      # Alacritty terminal config (Catppuccin Mocha)
 ├── btop/           # btop++ system monitor config & theme
 ├── dunst/          # Dunst X11 notification daemon
-├── fastfetch/      # 4-section colorful Fastfetch dashboard + custom Cyber Arch logo
+├── fastfetch/      # Compact system summary + optional custom Cyber Arch logo
 ├── foot/           # Foot Wayland terminal config
 ├── gtk/            # GTK-3.0 / GTK-4.0 dark theme, Thunar CSS, and sidebar bookmarks
 ├── i3/             # i3wm X11 window manager config (1366x768 calibrated)
